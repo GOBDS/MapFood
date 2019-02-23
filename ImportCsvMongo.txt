@@ -1,0 +1,1 @@
+mongoimport --db mapfood --collection clientes --type csv --headerline --file endereço/clientes.csv
