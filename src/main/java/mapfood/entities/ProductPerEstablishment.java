@@ -1,6 +1,6 @@
 package mapfood.entities;
 
-public class produtosPorEstabelecimento {
+public class ProductPerEstablishment {
 	private String itemDescription;
 	private String itemId;
 	private String restaurantId;

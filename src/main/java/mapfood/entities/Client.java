@@ -1,16 +1,16 @@
 package mapfood.entities;
 
-public class Clientes {
-	private int idCliente;
+public class Client {
+	private int idClient;
 	private double longitude;
 	private double latitude;
 	
 	public int getIdCliente() {
-		return idCliente;
+		return idClient;
 	}
 	
-	public void setIdCliente(int idCliente) {
-		this.idCliente = idCliente;
+	public void setIdCliente(int idClient) {
+		this.idClient = idClient;
 	}
 	
 	public double getLongitude() {

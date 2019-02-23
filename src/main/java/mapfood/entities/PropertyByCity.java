@@ -1,23 +1,24 @@
 package mapfood.entities;
 
-public class EstabelecimentoPorMunicipio {
-	private String restauranteId;
-	private String restaurante;
+public class PropertyByCity {
+	private String restaurantId;
+	private String restaurant;
 	private String adressCity;
 	private double longitude;
 	private double latitude;
 	private String dishdescription;
-	public String getRestauranteId() {
-		return restauranteId;
+	
+	public String getRestaurantId() {
+		return restaurantId;
 	}
-	public void setRestauranteId(String restauranteId) {
-		this.restauranteId = restauranteId;
+	public void setRestaurantId(String restaurantId) {
+		this.restaurantId = restaurantId;
 	}
-	public String getRestaurante() {
-		return restaurante;
+	public String getRestaurant() {
+		return restaurant;
 	}
-	public void setRestaurante(String restaurante) {
-		this.restaurante = restaurante;
+	public void setRestaurant(String restaurant) {
+		this.restaurant = restaurant;
 	}
 	public String getAdressCity() {
 		return adressCity;
