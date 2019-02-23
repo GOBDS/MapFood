@@ -1,4 +1,4 @@
-package entities;
+package mapfood.entities;
 
 public class EstabelecimentoPorMunicipio {
 	private String restauranteId;

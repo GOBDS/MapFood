@@ -1,4 +1,4 @@
-package entities;
+package mapfood.entities;
 
 public class Clientes {
 	private int idCliente;

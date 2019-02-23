@@ -1,4 +1,4 @@
-package entities;
+package mapfood.entities;
 
 public class produtosPorEstabelecimento {
 	private String itemDescription;
