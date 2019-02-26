@@ -1,4 +1,4 @@
-package mapfood;
+package br.com.squad2.mapfood.order;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
