@@ -1,4 +1,4 @@
-package br.com.squad2.mapfood.order.manager;
+package br.com.aceleradevsp.squad2.mapfood.manager;
 
 import org.springframework.stereotype.Service;
 

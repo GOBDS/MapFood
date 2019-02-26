@@ -1,4 +1,4 @@
-package br.com.squad2.mapfood.order.order;
+package br.com.aceleradevsp.squad2.mapfood.order;
 
 import org.springframework.web.bind.annotation.RestController;
 
