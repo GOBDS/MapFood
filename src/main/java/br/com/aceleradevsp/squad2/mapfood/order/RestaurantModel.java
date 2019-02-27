@@ -69,39 +69,43 @@ public class RestaurantModel {
         return new RestaurantModelBuilder();
     }
 
-    private static class RestaurantModelBuilder {
+    public static class RestaurantModelBuilder {
+
         private String restaurantId;
         private String restaurant;
         private String adressCity;
         private Position position;
         private String dishdescription;
 
-        public RestaurantModelBuilder setRestaurantId(String restaurantId) {
+
+        public RestaurantModelBuilder withRestaurantId(String restaurantId) {
+
             this.restaurantId = restaurantId;
             return this;
         }
 
-        public RestaurantModelBuilder setRestaurant(String restaurant) {
+        public RestaurantModelBuilder withRestaurant(String restaurant) {
             this.restaurant = restaurant;
             return this;
         }
 
-        public RestaurantModelBuilder setAdressCity(String adressCity) {
+        public RestaurantModelBuilder withAdressCity(String adressCity) {
+
             this.adressCity = adressCity;
             return this;
         }
 
-        public RestaurantModelBuilder setPosition(Position position) {
+        public RestaurantModelBuilder withPosition(Position position) {
             this.position = position;
             return this;
         }
 
-        public RestaurantModelBuilder setDishdescription(String dishdescription) {
+        public RestaurantModelBuilder withDishdescription(String dishdescription) {
             this.dishdescription = dishdescription;
             return this;
         }
 
-        public RestaurantModel createRestaurantModel() {
+        public RestaurantModel build() {
             return new RestaurantModel(restaurantId, restaurant, adressCity, position, dishdescription);
         }
     }

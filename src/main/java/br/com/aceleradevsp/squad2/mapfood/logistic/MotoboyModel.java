@@ -12,7 +12,7 @@ public class MotoboyModel {
 
     @Id
     private Integer idMotoBoy;
-    private Position postiion;
+    private Position position;
     private List<ItemModel> delivery;
 
 
@@ -21,7 +21,7 @@ public class MotoboyModel {
 
     public MotoboyModel(Integer idMotoBoy, Position postiion, List<ItemModel> delivery) {
         this.idMotoBoy = idMotoBoy;
-        this.postiion = postiion;
+        this.position = postiion;
         this.delivery = delivery;
     }
 
@@ -33,12 +33,12 @@ public class MotoboyModel {
         this.idMotoBoy = idMotoBoy;
     }
 
-    public Position getPostiion() {
-        return postiion;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setPostiion(Position postiion) {
-        this.postiion = postiion;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public List<ItemModel> getDelivery() {
@@ -56,7 +56,7 @@ public class MotoboyModel {
 
     public static class MotoboyModelBuilder {
         private Integer idMotoBoy;
-        private Position postiion;
+        private Position position;
         private List<ItemModel> delivery;
 
         public MotoboyModelBuilder withIdMotoBoy(Integer idMotoBoy) {
@@ -64,8 +64,8 @@ public class MotoboyModel {
             return this;
         }
 
-        public MotoboyModelBuilder withPostiion(Position postiion) {
-            this.postiion = postiion;
+        public MotoboyModelBuilder withPosition(Position position) {
+            this.position = position;
             return this;
         }
 
@@ -75,7 +75,7 @@ public class MotoboyModel {
         }
 
         public MotoboyModel build() {
-            return new MotoboyModel(idMotoBoy, postiion, delivery);
+            return new MotoboyModel(idMotoBoy, position, delivery);
         }
     }
 }

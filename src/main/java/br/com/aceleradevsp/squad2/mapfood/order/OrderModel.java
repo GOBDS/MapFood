@@ -64,27 +64,27 @@ public class OrderModel {
         private RestaurantModel restaurant;
         private ItemModel product;
 
-        public OrderModelBuilder setOrderId(String orderId) {
+        public OrderModelBuilder withOrderId(String orderId) {
             this.orderId = orderId;
             return this;
         }
 
-        public OrderModelBuilder setClient(ClientModel client) {
+        public OrderModelBuilder withClient(ClientModel client) {
             this.client = client;
             return this;
         }
 
-        public OrderModelBuilder setRestaurant(RestaurantModel restaurant) {
+        public OrderModelBuilder withRestaurant(RestaurantModel restaurant) {
             this.restaurant = restaurant;
             return this;
         }
 
-        public OrderModelBuilder setProduct(ItemModel product) {
+        public OrderModelBuilder withProduct(ItemModel product) {
             this.product = product;
             return this;
         }
 
-        public OrderModel createOrderModel() {
+        public OrderModel build() {
             return new OrderModel(orderId, client, restaurant, product);
         }
     }

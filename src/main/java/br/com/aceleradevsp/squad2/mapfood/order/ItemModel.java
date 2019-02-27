@@ -55,33 +55,36 @@ public class ItemModel {
         return new ItemModelBuilder();
     }
 
-    private static class ItemModelBuilder {
+
+    public static class ItemModelBuilder {
         private String itemId;
         private String itemDescription;
         private String classification;
         private double unitPrice;
 
-        public ItemModelBuilder setItemId(String itemId) {
+        public ItemModelBuilder withItemId(String itemId) {
+
             this.itemId = itemId;
             return this;
         }
 
-        public ItemModelBuilder setItemDescription(String itemDescription) {
+        public ItemModelBuilder withItemDescription(String itemDescription) {
             this.itemDescription = itemDescription;
             return this;
         }
 
-        public ItemModelBuilder setClassification(String classification) {
+        public ItemModelBuilder withClassification(String classification) {
             this.classification = classification;
             return this;
         }
 
-        public ItemModelBuilder setUnitPrice(double unitPrice) {
+        public ItemModelBuilder withUnitPrice(double unitPrice) {
+
             this.unitPrice = unitPrice;
             return this;
         }
 
-        public ItemModel createItemModel() {
+        public ItemModel build() {
             return new ItemModel(itemId, itemDescription, classification, unitPrice);
         }
     }

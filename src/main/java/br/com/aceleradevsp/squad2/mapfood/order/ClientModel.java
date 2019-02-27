@@ -35,25 +35,26 @@ public class ClientModel {
         this.idClient = idClient;
     }
 
-    public ClientModelBuilder builder(){
+    public static ClientModelBuilder builder(){
         return new ClientModelBuilder();
     }
 
-    private static class ClientModelBuilder {
+    public static class ClientModelBuilder {
         private Integer idClient;
         private Position position;
 
-        public ClientModelBuilder setIdClient(Integer idClient) {
+        public ClientModelBuilder withIdClient(Integer idClient) {
+
             this.idClient = idClient;
             return this;
         }
 
-        public ClientModelBuilder setPosition(Position position) {
+        public ClientModelBuilder withPosition(Position position) {
             this.position = position;
             return this;
         }
 
-        public ClientModel createClientModel() {
+        public ClientModel build() {
             return new ClientModel(idClient, position);
         }
     }
