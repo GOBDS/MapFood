@@ -14,6 +14,17 @@ public class RestaurantModel {
     private Position position;
     private String dishdescription;
 
+    public RestaurantModel() {
+    }
+
+    public RestaurantModel(String restaurantId, String restaurant, String adressCity, Position position, String dishdescription) {
+        this.restaurantId = restaurantId;
+        this.restaurant = restaurant;
+        this.adressCity = adressCity;
+        this.position = position;
+        this.dishdescription = dishdescription;
+    }
+
     public String getRestaurantId() {
         return restaurantId;
     }
@@ -52,5 +63,46 @@ public class RestaurantModel {
 
     public void setDishdescription(String dishdescription) {
         this.dishdescription = dishdescription;
+    }
+
+    public static RestaurantModelBuilder builder(){
+        return new RestaurantModelBuilder();
+    }
+
+    private static class RestaurantModelBuilder {
+        private String restaurantId;
+        private String restaurant;
+        private String adressCity;
+        private Position position;
+        private String dishdescription;
+
+        public RestaurantModelBuilder setRestaurantId(String restaurantId) {
+            this.restaurantId = restaurantId;
+            return this;
+        }
+
+        public RestaurantModelBuilder setRestaurant(String restaurant) {
+            this.restaurant = restaurant;
+            return this;
+        }
+
+        public RestaurantModelBuilder setAdressCity(String adressCity) {
+            this.adressCity = adressCity;
+            return this;
+        }
+
+        public RestaurantModelBuilder setPosition(Position position) {
+            this.position = position;
+            return this;
+        }
+
+        public RestaurantModelBuilder setDishdescription(String dishdescription) {
+            this.dishdescription = dishdescription;
+            return this;
+        }
+
+        public RestaurantModel createRestaurantModel() {
+            return new RestaurantModel(restaurantId, restaurant, adressCity, position, dishdescription);
+        }
     }
 }

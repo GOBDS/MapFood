@@ -11,6 +11,14 @@ public class ClientModel {
     private Integer idClient;
     private Position position;
 
+    public ClientModel(){
+    }
+
+    public ClientModel(Integer idClient, Position position) {
+        this.idClient = idClient;
+        this.position = position;
+    }
+
     public Position getPosition() {
         return position;
     }
@@ -26,4 +34,28 @@ public class ClientModel {
     public void setIdCliente(Integer idClient) {
         this.idClient = idClient;
     }
+
+    public ClientModelBuilder builder(){
+        return new ClientModelBuilder();
+    }
+
+    private static class ClientModelBuilder {
+        private Integer idClient;
+        private Position position;
+
+        public ClientModelBuilder setIdClient(Integer idClient) {
+            this.idClient = idClient;
+            return this;
+        }
+
+        public ClientModelBuilder setPosition(Position position) {
+            this.position = position;
+            return this;
+        }
+
+        public ClientModel createClientModel() {
+            return new ClientModel(idClient, position);
+        }
+    }
+
 }

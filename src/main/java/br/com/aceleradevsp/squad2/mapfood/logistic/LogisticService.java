@@ -22,4 +22,7 @@ public class LogisticService {
         this.repository = repository;
     }
 
+    public MotoboyModel createMotoboy(MotoboyModel motoboy){
+        return repository.save(motoboy);
+    }
 }

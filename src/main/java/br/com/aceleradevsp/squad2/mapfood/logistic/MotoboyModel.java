@@ -15,6 +15,7 @@ public class MotoboyModel {
     private Position postiion;
     private List<ItemModel> delivery;
 
+
     public MotoboyModel(){
     }
 
@@ -48,23 +49,27 @@ public class MotoboyModel {
         this.delivery = delivery;
     }
 
+    public static MotoboyModelBuilder builder(){
+        return new MotoboyModelBuilder();
+    }
 
-    public class MotoboyModelBuilder {
+
+    public static class MotoboyModelBuilder {
         private Integer idMotoBoy;
         private Position postiion;
         private List<ItemModel> delivery;
 
-        public MotoboyModelBuilder setIdMotoBoy(Integer idMotoBoy) {
+        public MotoboyModelBuilder withIdMotoBoy(Integer idMotoBoy) {
             this.idMotoBoy = idMotoBoy;
             return this;
         }
 
-        public MotoboyModelBuilder setPostiion(Position postiion) {
+        public MotoboyModelBuilder withPostiion(Position postiion) {
             this.postiion = postiion;
             return this;
         }
 
-        public MotoboyModelBuilder setDelivery(List<ItemModel> delivery) {
+        public MotoboyModelBuilder withDelivery(List<ItemModel> delivery) {
             this.delivery = delivery;
             return this;
         }

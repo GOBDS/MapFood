@@ -12,6 +12,16 @@ public class OrderModel {
     private RestaurantModel restaurant;
     private ItemModel product;
 
+    public OrderModel(){
+    }
+
+    public OrderModel(String orderId, ClientModel client, RestaurantModel restaurant, ItemModel product) {
+        this.orderId = orderId;
+        this.client = client;
+        this.restaurant = restaurant;
+        this.product = product;
+    }
+
     public String getOrderId() {
         return orderId;
     }
@@ -42,5 +52,40 @@ public class OrderModel {
 
     public void setProduct(ItemModel product) {
         this.product = product;
+    }
+
+    public static OrderModelBuilder builder(){
+        return new OrderModelBuilder();
+    }
+
+    private static class OrderModelBuilder {
+        private String orderId;
+        private ClientModel client;
+        private RestaurantModel restaurant;
+        private ItemModel product;
+
+        public OrderModelBuilder setOrderId(String orderId) {
+            this.orderId = orderId;
+            return this;
+        }
+
+        public OrderModelBuilder setClient(ClientModel client) {
+            this.client = client;
+            return this;
+        }
+
+        public OrderModelBuilder setRestaurant(RestaurantModel restaurant) {
+            this.restaurant = restaurant;
+            return this;
+        }
+
+        public OrderModelBuilder setProduct(ItemModel product) {
+            this.product = product;
+            return this;
+        }
+
+        public OrderModel createOrderModel() {
+            return new OrderModel(orderId, client, restaurant, product);
+        }
     }
 }
