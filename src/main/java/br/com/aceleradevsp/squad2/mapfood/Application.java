@@ -16,16 +16,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
     private static final String MOTOBOY_CSV = "motoboys.csv";
-    private static final String CLIENT_CSV = "cliente.csv";
-    private static final String RESTAURANT_CSV = "estabelecimento.csv";
+    private static final String CLIENT_CSV = "clientes.csv";
+    private static final String RESTAURANT_CSV = "estabelecimentos.csv";
     private static final String PRODUCTS_CSV = "produtos.csv";
     private static final String DELIMITER = ",";
 
@@ -53,8 +51,10 @@ public class Application implements CommandLineRunner {
 
     private void populateRestaurant() {
         try {
+            Map<String, List<ItemModel>> items = readItems();
             handleCSV(RESTAURANT_CSV).forEach(line -> {
                 int index = 0;
+                String id = "";
                 RestaurantModel.RestaurantModelBuilder builder = RestaurantModel.builder();
                 List<Double> position = new ArrayList<>();
                 Scanner CSVContentScanner = new Scanner(line);
@@ -65,7 +65,7 @@ public class Application implements CommandLineRunner {
                     String content = CSVContentScanner.next();
                     switch(index){
                         case 0 :
-                            builder.withRestaurantId(content);
+                            id = content;
                             break;
                         case 1 :
                             builder.withRestaurant(content);
@@ -85,7 +85,9 @@ public class Application implements CommandLineRunner {
                 }
 
                 orderService.createRestaurante(builder
+                        .withRestaurantId(id)
                         .withPosition(new Position(position))
+                        .withMenu(items.get(id))
                         .build());
             });
         } catch (IOException e) {
@@ -93,16 +95,17 @@ public class Application implements CommandLineRunner {
         }
     }
 
-    private void populateItem() {
+    private Map<String, List<ItemModel>> readItems() {
+        Map<String, List<ItemModel>> items = new HashMap<>();
         try {
             List<String> lines = handleCSV(PRODUCTS_CSV);
             for (String line : lines) {
                 Scanner CSVContentScanner = new Scanner(line);
                 CSVContentScanner.useDelimiter(DELIMITER);
+                String restaurantId = "";
+                ItemModel.ItemModelBuilder builder = ItemModel.builder();
                 int index =0;
                 while(CSVContentScanner.hasNext()){
-                    String restaurantId;
-                    ItemModel.ItemModelBuilder builder = ItemModel.builder();
                     //item_description,item_id,restaurant_id,restaurant,classification,unit_price,address_city
                     String content = CSVContentScanner.next();
                     switch(index){
@@ -123,9 +126,16 @@ public class Application implements CommandLineRunner {
                     }
                     index++;
                 }
+                items.computeIfAbsent(restaurantId, list -> Arrays.asList(builder.build()));
+                items.computeIfPresent(restaurantId, (k, v) -> {
+                    v.add(builder.build());
+                    return v;
+                });
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            return items;
         }
     }
 

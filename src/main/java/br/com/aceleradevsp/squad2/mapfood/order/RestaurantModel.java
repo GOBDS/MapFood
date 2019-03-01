@@ -4,6 +4,9 @@ import com.mongodb.client.model.geojson.Position;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Document(collection = "restaurant")
 public class RestaurantModel {
 
@@ -13,16 +16,19 @@ public class RestaurantModel {
     private String adressCity;
     private Position position;
     private String dishdescription;
+    private List<ItemModel> menu;
 
     public RestaurantModel() {
     }
 
-    public RestaurantModel(String restaurantId, String restaurant, String adressCity, Position position, String dishdescription) {
+    public RestaurantModel(String restaurantId, String restaurant, String adressCity, Position position, String dishdescription, List<ItemModel> menu) {
         this.restaurantId = restaurantId;
         this.restaurant = restaurant;
         this.adressCity = adressCity;
         this.position = position;
         this.dishdescription = dishdescription;
+        this.menu = null == menu ? new ArrayList<>() : menu;
+
     }
 
     public String getRestaurantId() {
@@ -69,6 +75,14 @@ public class RestaurantModel {
         return new RestaurantModelBuilder();
     }
 
+    public List<ItemModel> getMenu() {
+        return menu;
+    }
+
+    public void setMenu(List<ItemModel> menu) {
+        this.menu = menu;
+    }
+
     public static class RestaurantModelBuilder {
 
         private String restaurantId;
@@ -76,6 +90,7 @@ public class RestaurantModel {
         private String adressCity;
         private Position position;
         private String dishdescription;
+        private List<ItemModel> menu;
 
 
         public RestaurantModelBuilder withRestaurantId(String restaurantId) {
@@ -105,8 +120,13 @@ public class RestaurantModel {
             return this;
         }
 
+        public RestaurantModelBuilder withMenu(List<ItemModel> menu){
+            this.menu = menu;
+            return this;
+        }
+
         public RestaurantModel build() {
-            return new RestaurantModel(restaurantId, restaurant, adressCity, position, dishdescription);
+            return new RestaurantModel(restaurantId, restaurant, adressCity, position, dishdescription, menu);
         }
     }
 }
