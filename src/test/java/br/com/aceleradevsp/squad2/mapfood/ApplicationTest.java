@@ -1,4 +1,4 @@
-package mapfood;
+package br.com.aceleradevsp.squad2.mapfood;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
