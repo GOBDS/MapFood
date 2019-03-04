@@ -75,7 +75,12 @@ public class Application implements CommandLineRunner {
                             break;
                         case 3 :
                         case 4 :
-                            position.add(Double.parseDouble(content));
+                            try {
+                                position.add(Double.parseDouble(content));
+                            }catch (NumberFormatException e){
+                                System.out.println("Error:" + e.getMessage() + "For restaurant ID: " + id);
+                                position.add(0.0);
+                            }
                             break;
                         case 5 :
                             builder.withDishdescription(content);
@@ -89,6 +94,7 @@ public class Application implements CommandLineRunner {
                         .withPosition(new Position(position))
                         .withMenu(items.get(id))
                         .build());
+                CSVContentScanner.close();
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,7 +112,6 @@ public class Application implements CommandLineRunner {
                 ItemModel.ItemModelBuilder builder = ItemModel.builder();
                 int index =0;
                 while(CSVContentScanner.hasNext()){
-                    //item_description,item_id,restaurant_id,restaurant,classification,unit_price,address_city
                     String content = CSVContentScanner.next();
                     switch(index){
                         case 0 :
@@ -123,6 +128,7 @@ public class Application implements CommandLineRunner {
                             break;
                         case 5 :
                             builder.withUnitPrice(Double.parseDouble(content));
+                            break;
                     }
                     index++;
                 }
@@ -131,6 +137,7 @@ public class Application implements CommandLineRunner {
                     v.add(builder.build());
                     return v;
                 });
+                CSVContentScanner.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -167,6 +174,8 @@ public class Application implements CommandLineRunner {
                         .withIdClient(id)
                         .withPosition(new Position(position))
                         .build());
+
+                CSVContentScanner.close();
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -203,6 +212,8 @@ public class Application implements CommandLineRunner {
                         .withDelivery(new ArrayList<>())
                         .build());
 
+                CSVContentScanner.close();
+
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -222,6 +233,9 @@ public class Application implements CommandLineRunner {
         while ((line = CSVScanner.readLine()) != null) {
             csvLines.add(line);
         }
+
+        CSVScanner.close();
+
         return csvLines;
     }
 }
