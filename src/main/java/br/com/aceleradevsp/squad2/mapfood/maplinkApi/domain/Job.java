@@ -1,4 +1,4 @@
-package br.com.aceleradevsp.squad2.mapfood.mapLinkApi.domain;
+package br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain;
 
 public class Job {
 
@@ -6,12 +6,12 @@ public class Job {
     private String status;
     private String step;
     private String percent;
-    private Integer createdAt;
+    private Long createdAt;
 
     public Job() {
     }
 
-    public Job(String id, String status, String step, String percent, Integer createdAt) {
+    public Job(String id, String status, String step, String percent, Long createdAt) {
         this.id = id;
         this.status = status;
         this.step = step;
@@ -51,11 +51,11 @@ public class Job {
         this.percent = percent;
     }
 
-    public Integer getCreatedAt() {
+    public Long getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Integer createdAt) {
+    public void setCreatedAt(Long createdAt) {
         this.createdAt = createdAt;
     }
 }

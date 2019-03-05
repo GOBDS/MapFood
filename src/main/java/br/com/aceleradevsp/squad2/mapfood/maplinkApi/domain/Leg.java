@@ -1,14 +1,14 @@
-package br.com.aceleradevsp.squad2.mapfood.mapLinkApi.domain;
+package br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain;
 
 import java.util.List;
 
 public class Leg {
 
-    public Integer distance;
-    public Integer nominalDuration;
-    public Double averageSpeed;
-    public Integer speedProfilePenalty;
-    public List<Point> points;
+    private Integer distance;
+    private Integer nominalDuration;
+    private Double averageSpeed;
+    private Integer speedProfilePenalty;
+    private List<Point> points;
 
     public Leg() {
     }

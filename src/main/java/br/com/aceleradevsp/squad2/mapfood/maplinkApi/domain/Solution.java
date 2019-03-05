@@ -1,4 +1,4 @@
-package br.com.aceleradevsp.squad2.mapfood.mapLinkApi.domain;
+package br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain;
 
 import java.util.List;
 
@@ -11,12 +11,12 @@ public class Solution {
     private Double averageSpeed;
     private Integer totalSpeedProfilePenalty;
     private List<Leg> legs;
-    private Integer createdAt;
+    private Long createdAt;
 
     public Solution() {
     }
 
-    public Solution(String id, String clientId, Integer totalDistance, Integer totalNominalDuration, Double averageSpeed, Integer totalSpeedProfilePenalty, List<Leg> legs, Integer createdAt) {
+    public Solution(String id, String clientId, Integer totalDistance, Integer totalNominalDuration, Double averageSpeed, Integer totalSpeedProfilePenalty, List<Leg> legs, Long createdAt) {
         this.id = id;
         this.clientId = clientId;
         this.totalDistance = totalDistance;
@@ -83,11 +83,11 @@ public class Solution {
         this.legs = legs;
     }
 
-    public Integer getCreatedAt() {
+    public Long getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Integer createdAt) {
+    public void setCreatedAt(Long createdAt) {
         this.createdAt = createdAt;
     }
 }

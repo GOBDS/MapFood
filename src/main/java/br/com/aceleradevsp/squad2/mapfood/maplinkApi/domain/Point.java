@@ -1,4 +1,4 @@
-package br.com.aceleradevsp.squad2.mapfood.mapLinkApi.domain;
+package br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain;
 
 public class Point {
 
