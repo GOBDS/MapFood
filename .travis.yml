@@ -4,7 +4,7 @@ sudo: required
 
 addons:
   sonarcloud:
-    organization: "GOBDS_MapFood"
+    organization: "gobds-github"
 
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
