@@ -1,4 +1,4 @@
-package br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain;
+package br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -28,15 +28,12 @@ public class Authentication {
     public Authentication() {
     }
 
-    public Authentication(String refreshTokenExpiresIn, String apiProductList, String tokenType, String clientId, String accessToken, String applicationName, String expiresIn, String refreshCount, String status) {
-        this.refreshTokenExpiresIn = refreshTokenExpiresIn;
+    public Authentication(String apiProductList, String tokenType, String accessToken, String applicationName, String expiresIn, String status) {
         this.apiProductList = apiProductList;
         this.tokenType = tokenType;
-        this.clientId = clientId;
         this.accessToken = accessToken;
         this.applicationName = applicationName;
         this.expiresIn = expiresIn;
-        this.refreshCount = refreshCount;
         this.status = status;
     }
 

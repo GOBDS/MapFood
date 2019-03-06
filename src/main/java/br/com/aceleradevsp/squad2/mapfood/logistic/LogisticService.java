@@ -9,11 +9,6 @@ public class LogisticService {
     @Autowired
     private MotoboyRepository repository;
 
-    /*@Autowired
-    public LogisticService(MotoboyRepository repository) {
-        this.repository = repository;
-    }*/
-
     public MotoboyModel createMotoboy(MotoboyModel motoboy) {
         return repository.save(motoboy);
     }

@@ -1,6 +1,6 @@
-package br.com.aceleradevsp.squad2.mapfood.maplinkApi;
+package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
 
-import br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain.Authentication;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Authentication;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 
-import static br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain.URLMaplink.URL_LOGIN;
+import static br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.URLMaplink.URL_LOGIN;
 import static java.util.Collections.singletonList;
 
 @Component

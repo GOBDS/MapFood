@@ -1,4 +1,4 @@
-package br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain;
+package br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,13 +7,13 @@ import java.util.List;
 @Document(collection = "routes")
 public class PostObject {
 
-    public static final String shortWay = "THE_SHORTEST";
-    public static final String fastestWay = "THE_FASTEST";
+    public static final String SHORT_WAY = "THE_SHORTEST";
+    public static final String FASTEST_WAY = "THE_FASTEST";
 
     private String id;
     private List<Point> points;
     private String profileName = "BRAZIL";
-    private String calculationMode = fastestWay;
+    private String calculationMode = FASTEST_WAY;
     private Integer startDate = 0;
     private Boolean useRealSpeeds = true;
 

@@ -1,13 +1,13 @@
-package br.com.aceleradevsp.squad2.mapfood.maplinkApi;
+package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
 
-import br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain.PostObject;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PostObject;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 
-import static br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain.URLMaplink.URL_PROBLEM;
+import static br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.URLMaplink.URL_PROBLEM;
 import static java.net.URI.create;
 
 @Component
@@ -29,13 +29,13 @@ public class PostProblemController {
             if (problem.getStatusCode().is2xxSuccessful()) {
                 return problem.getBody();
             } else if (problem.getStatusCode().is4xxClientError()) {
-                throw new RuntimeException("Token expirado");
+                throw new TokenExpiredException("Token expirado");
             } else {
-                throw new RuntimeException("Ocorreu um erro no envio do problema");
+                throw new InvalidDataException("Ocorreu um erro no envio do problema");
             }
 
         } else {
-            throw new RuntimeException("Devem ser informados no mínimo 2 pontos para cálculo de rota");
+            throw new InvalidDataException("Devem ser informados no mínimo 2 pontos para cálculo de rota");
         }
     }
 
@@ -54,6 +54,6 @@ public class PostProblemController {
                 return getProblem.getBody();
             }
         }
-        throw new RuntimeException("O id e/ou token não pode estar em branco");
+        throw new InvalidDataException("O id e/ou token não pode estar em branco");
     }
 }

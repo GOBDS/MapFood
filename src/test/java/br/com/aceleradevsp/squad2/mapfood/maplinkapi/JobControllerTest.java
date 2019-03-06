@@ -1,7 +1,7 @@
-package br.com.aceleradevsp.squad2.mapfood.maplinkApi;
+package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
 
-import br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain.Authentication;
-import br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain.Job;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Authentication;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Job;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

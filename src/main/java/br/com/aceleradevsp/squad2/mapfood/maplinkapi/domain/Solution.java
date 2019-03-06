@@ -1,4 +1,4 @@
-package br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain;
+package br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain;
 
 import java.util.List;
 
@@ -16,9 +16,8 @@ public class Solution {
     public Solution() {
     }
 
-    public Solution(String id, String clientId, Integer totalDistance, Integer totalNominalDuration, Double averageSpeed, Integer totalSpeedProfilePenalty, List<Leg> legs, Long createdAt) {
+    public Solution(String id, Integer totalDistance, Integer totalNominalDuration, Double averageSpeed, Integer totalSpeedProfilePenalty, List<Leg> legs, Long createdAt) {
         this.id = id;
-        this.clientId = clientId;
         this.totalDistance = totalDistance;
         this.totalNominalDuration = totalNominalDuration;
         this.averageSpeed = averageSpeed;

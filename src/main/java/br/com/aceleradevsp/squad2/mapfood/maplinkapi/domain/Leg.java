@@ -1,4 +1,4 @@
-package br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain;
+package br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain;
 
 import java.util.List;
 

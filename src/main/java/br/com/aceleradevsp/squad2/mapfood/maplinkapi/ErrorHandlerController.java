@@ -1,4 +1,4 @@
-package br.com.aceleradevsp.squad2.mapfood.maplinkApi;
+package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -12,19 +12,20 @@ public class ErrorHandlerController implements ResponseErrorHandler {
 
     @Override
     public boolean hasError(ClientHttpResponse clientHttpResponse) throws IOException {
-        return true;
+        return clientHttpResponse.getStatusCode() == HttpStatus.NOT_FOUND || clientHttpResponse.getStatusCode() == HttpStatus.UNAUTHORIZED;
     }
 
     @Override
     public void handleError(ClientHttpResponse clientHttpResponse) throws IOException {
+        //Not necessary for our purposes.
     }
 
     @Override
     public void handleError(URI url, HttpMethod method, ClientHttpResponse response) throws IOException {
         if (response.getStatusCode().equals(HttpStatus.UNAUTHORIZED)) {
-            throw new RuntimeException("Token expirado");
+            throw new TokenExpiredException("Token expirado");
         } else if (response.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
-            throw new RuntimeException("Objeto não encontrado");
+            throw new ObjectNotFoundException("Objeto não encontrado");
         }
     }
 }

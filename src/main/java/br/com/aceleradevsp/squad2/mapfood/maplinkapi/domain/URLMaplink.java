@@ -1,6 +1,10 @@
-package br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain;
+package br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain;
 
-public final class URLMaplink {
+final class URLMaplink {
+
+    private URLMaplink() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static final String URL_LOGIN = "https://lbslocal-prod.apigee.net/oauth/client_credential/accesstoken?grant_type=client_credentials";
     public static final String URL_PROBLEM = "https://lbslocal-prod.apigee.net/trip/v1/problems";

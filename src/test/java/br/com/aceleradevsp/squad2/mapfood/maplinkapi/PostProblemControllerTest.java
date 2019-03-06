@@ -1,8 +1,8 @@
-package br.com.aceleradevsp.squad2.mapfood.maplinkApi;
+package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
 
-import br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain.Authentication;
-import br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain.Point;
-import br.com.aceleradevsp.squad2.mapfood.maplinkApi.domain.PostObject;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Authentication;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Point;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PostObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
