@@ -77,18 +77,10 @@ public class Application implements CommandLineRunner {
                             builder.withAdressCity(content);
                             break;
                         case 3 :
-                            try{
-                                position[1] = Double.parseDouble(content);
-                            }catch (NumberFormatException e) {
-                                position[1] = 0.0;
-                            }
+                            position[1] = parseDouble(content);
                             break;
                         case 4 :
-                            try{
-                                position[0] = Double.parseDouble(content);
-                            }catch (NumberFormatException e) {
-                                position[0] = 0.0;
-                            }
+                            position[0] = parseDouble(content);
                             break;
                         case 5 :
                             builder.withDishdescription(content);
@@ -247,5 +239,14 @@ public class Application implements CommandLineRunner {
             logger.error(e.getMessage());
         }
         return csvLines;
+    }
+
+    private double parseDouble(String value){
+        try{
+            return Double.parseDouble(value);
+        }catch (NumberFormatException e) {
+            logger.error(e.getMessage());
+            return 0.0;
+        }
     }
 }
