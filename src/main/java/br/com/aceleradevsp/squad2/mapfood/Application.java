@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -25,7 +26,7 @@ public class Application implements CommandLineRunner {
     private static final String CLIENT_CSV = "clientes.csv";
     private static final String RESTAURANT_CSV = "estabelecimentos.csv";
     private static final String PRODUCTS_CSV = "produtos.csv";
-    private static final String DELIMITER = ",";
+    private static final Pattern DELIMITER = Pattern.compile(",(?=([^\"]*\"[^\"]*\")*(?![^\"]*\"))");
 
 
     private LogisticService logisticService;
@@ -132,18 +133,22 @@ public class Application implements CommandLineRunner {
                     }
                     index++;
                 }
-                items.computeIfAbsent(restaurantId, list -> Arrays.asList(builder.build()));
                 items.computeIfPresent(restaurantId, (k, v) -> {
                     v.add(builder.build());
                     return v;
                 });
+                items.computeIfAbsent(restaurantId, list -> {
+                 List<ItemModel> itemsList = new ArrayList<>();
+                 itemsList.add(builder.build());
+                 return itemsList;
+                });
+
                 CSVContentScanner.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            return items;
         }
+        return items;
     }
 
     private void populateClient() {
