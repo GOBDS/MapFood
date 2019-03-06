@@ -3,6 +3,7 @@ package br.com.aceleradevsp.squad2.mapfood.logistic;
 import br.com.aceleradevsp.squad2.mapfood.order.ItemModel;
 import com.mongodb.client.model.geojson.Position;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -12,7 +13,10 @@ public class MotoboyModel {
 
     @Id
     private Integer idMotoBoy;
+
+    @GeoSpatialIndexed
     private Position position;
+
     private List<ItemModel> delivery;
 
 
