@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.core.geo.GeoJson;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -92,7 +93,7 @@ public class Application implements CommandLineRunner {
 
                 orderService.createRestaurante(builder
                         .withRestaurantId(id)
-                        .withPosition(new Position(position))
+                        .withPosition(new Position(position.get(1),position.get(0)))
                         .withMenu(items.get(id))
                         .build());
                 CSVContentScanner.close();
@@ -177,7 +178,7 @@ public class Application implements CommandLineRunner {
 
                 orderService.createClient(ClientModel.builder()
                         .withIdClient(id)
-                        .withPosition(new Position(position))
+                        .withPosition(new Position(position.get(1),position.get(0)))
                         .build());
 
                 CSVContentScanner.close();
@@ -210,10 +211,9 @@ public class Application implements CommandLineRunner {
                     }
                     index++;
                 }
-
                 logisticService.createMotoboy(MotoboyModel.builder()
                         .withIdMotoBoy(id)
-                        .withPosition(new Position(position))
+                        .withPosition(new Position(position.get(1),position.get(0)))
                         .withDelivery(new ArrayList<>())
                         .build());
 
