@@ -57,7 +57,7 @@ public class Application implements CommandLineRunner {
                 int index = 0;
                 String id = "";
                 RestaurantModel.RestaurantModelBuilder builder = RestaurantModel.builder();
-                List<Double> position = new ArrayList<>();
+                double[] position = new double[2];
                 Scanner CSVContentScanner = new Scanner(line);
 
                 CSVContentScanner.useDelimiter(DELIMITER);
@@ -75,12 +75,19 @@ public class Application implements CommandLineRunner {
                             builder.withAdressCity(content);
                             break;
                         case 3 :
-                        case 4 :
-                            try {
-                                position.add(Double.parseDouble(content));
-                            }catch (NumberFormatException e){
+                            try{
+                                position[1] = Double.parseDouble(content);
+                            }catch (NumberFormatException e) {
                                 System.out.println("Error:" + e.getMessage() + "For restaurant ID: " + id);
-                                position.add(0.0);
+                                position[1] = 0.0;
+                            }
+                            break;
+                        case 4 :
+                            try{
+                                position[0] = Double.parseDouble(content);
+                            }catch (NumberFormatException e) {
+                                System.out.println("Error:" + e.getMessage() + "For restaurant ID: " + id);
+                                position[0] = 0.0;
                             }
                             break;
                         case 5 :
@@ -92,7 +99,7 @@ public class Application implements CommandLineRunner {
 
                 orderService.createRestaurante(builder
                         .withRestaurantId(id)
-                        .withPosition(new Position(position.get(1),position.get(0)))
+                        .withPosition(position)
                         .withMenu(items.get(id))
                         .build());
                 CSVContentScanner.close();
@@ -156,7 +163,7 @@ public class Application implements CommandLineRunner {
             handleCSV(CLIENT_CSV).forEach(line -> {
                 int index = 0;
                 int id = 0;
-                List<Double> position = new ArrayList<>();
+                double[] position = new double[2];
                 Scanner CSVContentScanner = new Scanner(line);
 
                 CSVContentScanner.useDelimiter(DELIMITER);
@@ -168,8 +175,10 @@ public class Application implements CommandLineRunner {
                             id = Integer.parseInt(content);
                             break;
                         case 1 :
+                            position[1] = Double.parseDouble(content);
+                            break;
                         case 2 :
-                            position.add(Double.parseDouble(content));
+                            position[0] = Double.parseDouble(content);
                             break;
                     }
                     index++;
@@ -177,7 +186,7 @@ public class Application implements CommandLineRunner {
 
                 orderService.createClient(ClientModel.builder()
                         .withIdClient(id)
-                        .withPosition(new Position(position.get(1),position.get(0)))
+                        .withPosition(position)
                         .build());
 
                 CSVContentScanner.close();
@@ -192,7 +201,7 @@ public class Application implements CommandLineRunner {
             handleCSV(MOTOBOY_CSV).forEach(line -> {
                 int index = 0;
                 int id = 0;
-                List<Double> position = new ArrayList<>();
+                double[] position = new double[2];
                 Scanner CSVContentScanner = new Scanner(line);
 
                 CSVContentScanner.useDelimiter(DELIMITER);
@@ -204,15 +213,17 @@ public class Application implements CommandLineRunner {
                             id = Integer.parseInt(content);
                             break;
                         case 1 :
+                            position[1] = Double.parseDouble(content);
+                            break;
                         case 2 :
-                            position.add(Double.parseDouble(content));
+                            position[0] = Double.parseDouble(content);
                             break;
                     }
                     index++;
                 }
                 logisticService.createMotoboy(MotoboyModel.builder()
                         .withIdMotoBoy(id)
-                        .withPosition(new Position(position.get(1),position.get(0)))
+                        .withPosition(position)
                         .withDelivery(new ArrayList<>())
                         .build());
 

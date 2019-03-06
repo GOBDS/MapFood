@@ -19,7 +19,7 @@ public class RestaurantModel {
     private String adressCity;
 
     @GeoSpatialIndexed
-    private Position position;
+    private double[] position;
 
     private String dishdescription;
 
@@ -28,7 +28,7 @@ public class RestaurantModel {
     public RestaurantModel() {
     }
 
-    public RestaurantModel(String restaurantId, String restaurant, String adressCity, Position position, String dishdescription, List<ItemModel> menu) {
+    public RestaurantModel(String restaurantId, String restaurant, String adressCity, double[] position, String dishdescription, List<ItemModel> menu) {
         this.restaurantId = restaurantId;
         this.restaurant = restaurant;
         this.adressCity = adressCity;
@@ -62,11 +62,11 @@ public class RestaurantModel {
         this.adressCity = adressCity;
     }
 
-    public Position getPosition() {
+    public double[] getPosition() {
         return position;
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(double[] position) {
         this.position = position;
     }
 
@@ -95,7 +95,7 @@ public class RestaurantModel {
         private String restaurantId;
         private String restaurant;
         private String adressCity;
-        private Position position;
+        private double[] position;
         private String dishdescription;
         private List<ItemModel> menu;
 
@@ -117,7 +117,7 @@ public class RestaurantModel {
             return this;
         }
 
-        public RestaurantModelBuilder withPosition(Position position) {
+        public RestaurantModelBuilder withPosition(double[] position) {
             this.position = position;
             return this;
         }

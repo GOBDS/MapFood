@@ -1,7 +1,6 @@
 package br.com.aceleradevsp.squad2.mapfood.logistic;
 
 import br.com.aceleradevsp.squad2.mapfood.order.ItemModel;
-import com.mongodb.client.model.geojson.Position;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,7 +14,7 @@ public class MotoboyModel {
     private Integer idMotoBoy;
 
     @GeoSpatialIndexed
-    private Position position;
+    private double[] position;
 
     private List<ItemModel> delivery;
 
@@ -23,7 +22,7 @@ public class MotoboyModel {
     public MotoboyModel(){
     }
 
-    public MotoboyModel(Integer idMotoBoy, Position postiion, List<ItemModel> delivery) {
+    public MotoboyModel(Integer idMotoBoy, double[] postiion, List<ItemModel> delivery) {
         this.idMotoBoy = idMotoBoy;
         this.position = postiion;
         this.delivery = delivery;
@@ -37,11 +36,11 @@ public class MotoboyModel {
         this.idMotoBoy = idMotoBoy;
     }
 
-    public Position getPosition() {
+    public double[] getPosition() {
         return position;
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(double[] position) {
         this.position = position;
     }
 
@@ -60,7 +59,10 @@ public class MotoboyModel {
 
     public static class MotoboyModelBuilder {
         private Integer idMotoBoy;
-        private Position position;
+
+        @GeoSpatialIndexed
+        private double[] position;
+
         private List<ItemModel> delivery;
 
         public MotoboyModelBuilder withIdMotoBoy(Integer idMotoBoy) {
@@ -68,7 +70,7 @@ public class MotoboyModel {
             return this;
         }
 
-        public MotoboyModelBuilder withPosition(Position position) {
+        public MotoboyModelBuilder withPosition(double[] position) {
             this.position = position;
             return this;
         }
