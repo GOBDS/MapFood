@@ -1,6 +1,6 @@
 package br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain;
 
-final class URLMaplink {
+public final class URLMaplink {
 
     private URLMaplink() {
         throw new IllegalStateException("Utility class");
