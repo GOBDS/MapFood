@@ -3,9 +3,15 @@ package br.com.aceleradevsp.squad2.mapfood;
 import br.com.aceleradevsp.squad2.mapfood.logistic.LogisticService;
 import br.com.aceleradevsp.squad2.mapfood.logistic.MotoboyModel;
 import br.com.aceleradevsp.squad2.mapfood.order.ClientModel;
+import br.com.aceleradevsp.squad2.mapfood.order.ClientRepository;
 import br.com.aceleradevsp.squad2.mapfood.order.ItemModel;
+import br.com.aceleradevsp.squad2.mapfood.order.OrderController;
+import br.com.aceleradevsp.squad2.mapfood.order.OrderModel;
+import br.com.aceleradevsp.squad2.mapfood.order.OrderRepository;
 import br.com.aceleradevsp.squad2.mapfood.order.OrderService;
 import br.com.aceleradevsp.squad2.mapfood.order.RestaurantModel;
+import br.com.aceleradevsp.squad2.mapfood.order.RestaurantRepository;
+import br.com.aceleradevsp.squad2.mapfood.utils.MapFoodUtils;
 
 import com.mongodb.client.model.geojson.Position;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +54,41 @@ public class Application implements CommandLineRunner {
         populateMotoboy();
         populateClient();
         populateRestaurant();
+        populateOrders();
     }
 
-    private void populateRestaurant() {
+    
+    public static RestaurantModel randomRestaurant() {
+    	
+    	OrderService serviceRest = null; //errado
+    	List <RestaurantModel> restaurantList = new ArrayList<>();
+    	restaurantList = serviceRest.allRestaurants(); //errado  	
+    	RestaurantModel restaurantOrder; //errado
+    	if(!restaurantList.isEmpty()) {
+    		int indice = MapFoodUtils.getRandomNumber(0, restaurantList.size());
+    		restaurantOrder = restaurantList.get(indice);
+    	}
+    	return null;//restaurantOrder;
+    }  
+    
+    public static ClientModel randomClient(OrderService service) {
+    	List <ClientModel> clientList = new ArrayList<>();
+       	clientList = service.allClients();  	
+    	ClientModel clientOrder;    	
+    	int indice = MapFoodUtils.getRandomNumber(0, clientList.size());
+    	clientOrder = clientList.get(indice);	
+    	return clientOrder;
+    }  
+    
+    private void populateOrders() {
+    	
+    	OrderModel.OrderModelBuilder builder = OrderModel.builder();
+        RestaurantModel restaurant = randomRestaurant();
+    	builder.withRestaurant(restaurant);
+    	//builder.withClient(randomClient(service));		
+    }
+    	
+	private void populateRestaurant() {
         try {
             Map<String, List<ItemModel>> items = readItems();
             handleCSV(RESTAURANT_CSV).forEach(line -> {
@@ -242,4 +280,7 @@ public class Application implements CommandLineRunner {
 
         return csvLines;
     }
+    
+    
+    
 }
