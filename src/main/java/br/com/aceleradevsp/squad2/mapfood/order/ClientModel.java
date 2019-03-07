@@ -1,6 +1,5 @@
 package br.com.aceleradevsp.squad2.mapfood.order;
 
-import com.mongodb.client.model.geojson.Position;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,21 +11,21 @@ public class ClientModel {
     private Integer idClient;
 
     @GeoSpatialIndexed
-    private Position position;
+    private double[] position;
 
     public ClientModel(){
     }
 
-    public ClientModel(Integer idClient, Position position) {
+    public ClientModel(Integer idClient, double[] position) {
         this.idClient = idClient;
         this.position = position;
     }
 
-    public Position getPosition() {
+    public double[] getPosition() {
         return position;
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(double[] position) {
         this.position = position;
     }
 
@@ -44,7 +43,7 @@ public class ClientModel {
 
     public static class ClientModelBuilder {
         private Integer idClient;
-        private Position position;
+        private double[] position;
 
         public ClientModelBuilder withIdClient(Integer idClient) {
 
@@ -52,7 +51,7 @@ public class ClientModel {
             return this;
         }
 
-        public ClientModelBuilder withPosition(Position position) {
+        public ClientModelBuilder withPosition(double[] position) {
             this.position = position;
             return this;
         }

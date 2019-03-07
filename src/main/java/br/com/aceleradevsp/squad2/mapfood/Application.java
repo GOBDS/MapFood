@@ -7,7 +7,8 @@ import br.com.aceleradevsp.squad2.mapfood.order.ItemModel;
 import br.com.aceleradevsp.squad2.mapfood.order.OrderService;
 import br.com.aceleradevsp.squad2.mapfood.order.RestaurantModel;
 
-import com.mongodb.client.model.geojson.Position;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,6 +22,8 @@ import java.util.regex.Pattern;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
+
+    Logger logger = LoggerFactory.getLogger(Application.class);
 
     private static final String MOTOBOY_CSV = "motoboys.csv";
     private static final String CLIENT_CSV = "clientes.csv";
@@ -51,19 +54,18 @@ public class Application implements CommandLineRunner {
     }
 
     private void populateRestaurant() {
-        try {
-            Map<String, List<ItemModel>> items = readItems();
-            handleCSV(RESTAURANT_CSV).forEach(line -> {
+        Map<String, List<ItemModel>> items = readItems();
+        handleCSV(RESTAURANT_CSV).forEach(line -> {
+            try(Scanner csvContentScanner = new Scanner(line)){
                 int index = 0;
                 String id = "";
                 RestaurantModel.RestaurantModelBuilder builder = RestaurantModel.builder();
-                List<Double> position = new ArrayList<>();
-                Scanner CSVContentScanner = new Scanner(line);
+                double[] position = new double[2];
 
-                CSVContentScanner.useDelimiter(DELIMITER);
+                csvContentScanner.useDelimiter(DELIMITER);
 
-                while(CSVContentScanner.hasNext()){
-                    String content = CSVContentScanner.next();
+                while(csvContentScanner.hasNext()){
+                    String content = csvContentScanner.next();
                     switch(index){
                         case 0 :
                             id = content;
@@ -75,16 +77,15 @@ public class Application implements CommandLineRunner {
                             builder.withAdressCity(content);
                             break;
                         case 3 :
+                            position[1] = parseDouble(content);
+                            break;
                         case 4 :
-                            try {
-                                position.add(Double.parseDouble(content));
-                            }catch (NumberFormatException e){
-                                System.out.println("Error:" + e.getMessage() + "For restaurant ID: " + id);
-                                position.add(0.0);
-                            }
+                            position[0] = parseDouble(content);
                             break;
                         case 5 :
                             builder.withDishdescription(content);
+                            break;
+                        default:
                             break;
                     }
                     index++;
@@ -92,43 +93,43 @@ public class Application implements CommandLineRunner {
 
                 orderService.createRestaurante(builder
                         .withRestaurantId(id)
-                        .withPosition(new Position(position.get(1),position.get(0)))
+                        .withPosition(position)
                         .withMenu(items.get(id))
                         .build());
-                CSVContentScanner.close();
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            }catch (Exception e){
+                logger.error(e.getMessage());
+            }
+        });
     }
 
     private Map<String, List<ItemModel>> readItems() {
         Map<String, List<ItemModel>> items = new HashMap<>();
-        try {
-            List<String> lines = handleCSV(PRODUCTS_CSV);
-            for (String line : lines) {
-                Scanner CSVContentScanner = new Scanner(line);
-                CSVContentScanner.useDelimiter(DELIMITER);
+        List<String> lines = handleCSV(PRODUCTS_CSV);
+        for (String line : lines) {
+            try (Scanner csvContentScanner = new Scanner(line)) {
+                csvContentScanner.useDelimiter(DELIMITER);
                 String restaurantId = "";
                 ItemModel.ItemModelBuilder builder = ItemModel.builder();
-                int index =0;
-                while(CSVContentScanner.hasNext()){
-                    String content = CSVContentScanner.next();
-                    switch(index){
-                        case 0 :
+                int index = 0;
+                while (csvContentScanner.hasNext()) {
+                    String content = csvContentScanner.next();
+                    switch (index) {
+                        case 0:
                             builder.withItemDescription(content);
                             break;
-                        case 1 :
+                        case 1:
                             builder.withItemId(content);
                             break;
-                        case 2 :
+                        case 2:
                             restaurantId = content;
                             break;
-                        case 4 :
+                        case 4:
                             builder.withClassification(content);
                             break;
-                        case 5 :
+                        case 5:
                             builder.withUnitPrice(Double.parseDouble(content));
+                            break;
+                        default:
                             break;
                     }
                     index++;
@@ -138,38 +139,39 @@ public class Application implements CommandLineRunner {
                     return v;
                 });
                 items.computeIfAbsent(restaurantId, list -> {
-                 List<ItemModel> itemsList = new ArrayList<>();
-                 itemsList.add(builder.build());
-                 return itemsList;
+                    List<ItemModel> itemsList = new ArrayList<>();
+                    itemsList.add(builder.build());
+                    return itemsList;
                 });
-
-                CSVContentScanner.close();
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return items;
     }
 
     private void populateClient() {
-        try {
-            handleCSV(CLIENT_CSV).forEach(line -> {
+        handleCSV(CLIENT_CSV).forEach(line -> {
+            try(Scanner csvContentScanner = new Scanner(line)) {
                 int index = 0;
                 int id = 0;
-                List<Double> position = new ArrayList<>();
-                Scanner CSVContentScanner = new Scanner(line);
+                double[] position = new double[2];
 
-                CSVContentScanner.useDelimiter(DELIMITER);
+                csvContentScanner.useDelimiter(DELIMITER);
 
-                while(CSVContentScanner.hasNext()){
-                    String content = CSVContentScanner.next();
+                while(csvContentScanner.hasNext()){
+                    String content = csvContentScanner.next();
                     switch(index){
                         case 0 :
                             id = Integer.parseInt(content);
                             break;
                         case 1 :
+                            position[1] = Double.parseDouble(content);
+                            break;
                         case 2 :
-                            position.add(Double.parseDouble(content));
+                            position[0] = Double.parseDouble(content);
+                            break;
+                        default:
                             break;
                     }
                     index++;
@@ -177,69 +179,75 @@ public class Application implements CommandLineRunner {
 
                 orderService.createClient(ClientModel.builder()
                         .withIdClient(id)
-                        .withPosition(new Position(position.get(1),position.get(0)))
+                        .withPosition(position)
                         .build());
-
-                CSVContentScanner.close();
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            }catch (Exception e) {
+                logger.error(e.getMessage());
+            }
+        });
     }
 
     private void populateMotoboy() {
-        try {
-            handleCSV(MOTOBOY_CSV).forEach(line -> {
+        handleCSV(MOTOBOY_CSV).forEach(line -> {
+            try(Scanner csvContentScanner = new Scanner(line)) {
                 int index = 0;
                 int id = 0;
-                List<Double> position = new ArrayList<>();
-                Scanner CSVContentScanner = new Scanner(line);
+                double[] position = new double[2];
 
-                CSVContentScanner.useDelimiter(DELIMITER);
+                csvContentScanner.useDelimiter(DELIMITER);
 
-                while(CSVContentScanner.hasNext()){
-                    String content = CSVContentScanner.next();
+                while(csvContentScanner.hasNext()){
+                    String content = csvContentScanner.next();
                     switch(index){
                         case 0 :
                             id = Integer.parseInt(content);
                             break;
                         case 1 :
+                            position[1] = Double.parseDouble(content);
+                            break;
                         case 2 :
-                            position.add(Double.parseDouble(content));
+                            position[0] = Double.parseDouble(content);
+                            break;
+                        default:
                             break;
                     }
                     index++;
                 }
                 logisticService.createMotoboy(MotoboyModel.builder()
                         .withIdMotoBoy(id)
-                        .withPosition(new Position(position.get(1),position.get(0)))
+                        .withPosition(position)
                         .withDelivery(new ArrayList<>())
                         .build());
-
-                CSVContentScanner.close();
-
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            }catch (Exception e) {
+                logger.error(e.getMessage());
+            }
+        });
     }
 
-    private List<String> handleCSV(String resource) throws IOException {
+    private List<String> handleCSV(String resource) {
         ClassLoader classLoader = getClass().getClassLoader();
-        BufferedReader CSVScanner = null;
         String line = null;
         List<String> csvLines = new ArrayList<>();
 
-        CSVScanner = new BufferedReader(new FileReader(classLoader.getResource(resource).getFile()));
-        //Ignore first line
-        CSVScanner.readLine();
+        try(BufferedReader csvScanner = new BufferedReader(new FileReader(classLoader.getResource(resource).getFile()))){
+            String header = csvScanner.readLine();
+            logger.debug(header);
 
-        while ((line = CSVScanner.readLine()) != null) {
-            csvLines.add(line);
+            while ((line = csvScanner.readLine()) != null) {
+                csvLines.add(line);
+            }
+        }catch (IOException e){
+            logger.error(e.getMessage());
         }
-
-        CSVScanner.close();
-
         return csvLines;
+    }
+
+    private double parseDouble(String value){
+        try{
+            return Double.parseDouble(value);
+        }catch (NumberFormatException e) {
+            logger.error(e.getMessage());
+            return 0.0;
+        }
     }
 }
