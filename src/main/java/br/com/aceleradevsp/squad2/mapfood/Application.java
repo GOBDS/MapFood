@@ -230,7 +230,8 @@ public class Application implements CommandLineRunner {
         List<String> csvLines = new ArrayList<>();
 
         try(BufferedReader csvScanner = new BufferedReader(new FileReader(classLoader.getResource(resource).getFile()))){
-            csvScanner.readLine();
+            String Header = csvScanner.readLine();
+            logger.debug(Header);
 
             while ((line = csvScanner.readLine()) != null) {
                 csvLines.add(line);
