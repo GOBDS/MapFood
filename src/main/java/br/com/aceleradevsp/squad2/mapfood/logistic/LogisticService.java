@@ -6,14 +6,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class LogisticService {
 
-    MotoboyRepository repository;
-
     @Autowired
-    public LogisticService(MotoboyRepository repository){
-        this.repository = repository;
-    }
+    private MotoboyRepository repository;
 
-    public MotoboyModel createMotoboy(MotoboyModel motoboy){
+    public MotoboyModel createMotoboy(MotoboyModel motoboy) {
         return repository.save(motoboy);
     }
 }
