@@ -21,19 +21,19 @@ public class RestaurantModel {
     @GeoSpatialIndexed
     private Position position;
 
-    private String dishdescription;
+    private String dishDescription;
 
     private List<ItemModel> menu;
 
     public RestaurantModel() {
     }
 
-    public RestaurantModel(String restaurantId, String restaurant, String adressCity, Position position, String dishdescription, List<ItemModel> menu) {
+    public RestaurantModel(String restaurantId, String restaurant, String adressCity, Position position, String dishDescription, List<ItemModel> menu) {
         this.restaurantId = restaurantId;
         this.restaurant = restaurant;
         this.adressCity = adressCity;
         this.position = position;
-        this.dishdescription = dishdescription;
+        this.dishDescription = dishDescription;
         this.menu = null == menu ? new ArrayList<>() : menu;
 
     }
@@ -70,16 +70,16 @@ public class RestaurantModel {
         this.position = position;
     }
 
-    public String getDishdescription() {
-        return dishdescription;
-    }
-
-    public void setDishdescription(String dishdescription) {
-        this.dishdescription = dishdescription;
-    }
-
-    public static RestaurantModelBuilder builder(){
+    public static RestaurantModelBuilder builder() {
         return new RestaurantModelBuilder();
+    }
+
+    public String getDishDescription() {
+        return dishDescription;
+    }
+
+    public void setDishDescription(String dishDescription) {
+        this.dishDescription = dishDescription;
     }
 
     public List<ItemModel> getMenu() {
@@ -127,7 +127,7 @@ public class RestaurantModel {
             return this;
         }
 
-        public RestaurantModelBuilder withMenu(List<ItemModel> menu){
+        public RestaurantModelBuilder withMenu(List<ItemModel> menu) {
             this.menu = menu;
             return this;
         }

@@ -1,6 +1,6 @@
 package br.com.aceleradevsp.squad2.mapfood.logistic;
 
-import br.com.aceleradevsp.squad2.mapfood.order.ItemModel;
+import br.com.aceleradevsp.squad2.mapfood.order.OrderModel;
 import com.mongodb.client.model.geojson.Position;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
@@ -17,13 +17,13 @@ public class MotoboyModel {
     @GeoSpatialIndexed
     private Position position;
 
-    private List<ItemModel> delivery;
+    private List<OrderModel> delivery;
 
 
-    public MotoboyModel(){
+    public MotoboyModel() {
     }
 
-    public MotoboyModel(Integer idMotoBoy, Position postiion, List<ItemModel> delivery) {
+    public MotoboyModel(Integer idMotoBoy, Position postiion, List<OrderModel> delivery) {
         this.idMotoBoy = idMotoBoy;
         this.position = postiion;
         this.delivery = delivery;
@@ -45,23 +45,22 @@ public class MotoboyModel {
         this.position = position;
     }
 
-    public List<ItemModel> getDelivery() {
-        return delivery;
-    }
-
-    public void setDelivery(List<ItemModel> delivery) {
-        this.delivery = delivery;
-    }
-
-    public static MotoboyModelBuilder builder(){
+    public static MotoboyModelBuilder builder() {
         return new MotoboyModelBuilder();
     }
 
+    public List<OrderModel> getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(List<OrderModel> delivery) {
+        this.delivery = delivery;
+    }
 
     public static class MotoboyModelBuilder {
         private Integer idMotoBoy;
         private Position position;
-        private List<ItemModel> delivery;
+        private List<OrderModel> delivery;
 
         public MotoboyModelBuilder withIdMotoBoy(Integer idMotoBoy) {
             this.idMotoBoy = idMotoBoy;
@@ -73,7 +72,7 @@ public class MotoboyModel {
             return this;
         }
 
-        public MotoboyModelBuilder withDelivery(List<ItemModel> delivery) {
+        public MotoboyModelBuilder withDelivery(List<OrderModel> delivery) {
             this.delivery = delivery;
             return this;
         }
