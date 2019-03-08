@@ -30,7 +30,7 @@ public class Application implements CommandLineRunner {
     private OrderService orderService;
 
     @Autowired
-    public Application(LogisticService logisticService,  OrderService orderService) {
+    public Application(LogisticService logisticService, OrderService orderService) {
         this.logisticService = logisticService;
         this.orderService = orderService;
     }
@@ -48,38 +48,38 @@ public class Application implements CommandLineRunner {
         populateOrders();
     }
 
-    
+
     public static RestaurantModel randomRestaurant() {
-    	
-    	OrderService serviceRest = null; //errado
-    	List <RestaurantModel> restaurantList = new ArrayList<>();
-    	restaurantList = serviceRest.allRestaurants(); //errado  	
-    	RestaurantModel restaurantOrder; //errado
-    	if(!restaurantList.isEmpty()) {
-    		int indice = MapFoodUtils.getRandomNumber(0, restaurantList.size());
-    		restaurantOrder = restaurantList.get(indice);
-    	}
-    	return null;//restaurantOrder;
-    }  
-    
-    public static ClientModel randomClient(OrderService service) {
-    	List <ClientModel> clientList = new ArrayList<>();
-       	clientList = service.allClients();  	
-    	ClientModel clientOrder;    	
-    	int indice = MapFoodUtils.getRandomNumber(0, clientList.size());
-    	clientOrder = clientList.get(indice);	
-    	return clientOrder;
-    }  
-    
-    private void populateOrders() {
-    	
-    	OrderModel.OrderModelBuilder builder = OrderModel.builder();
-        RestaurantModel restaurant = randomRestaurant();
-    	builder.withRestaurant(restaurant);
-    	//builder.withClient(randomClient(service));		
+
+        OrderService serviceRest = null; //errado
+        List<RestaurantModel> restaurantList = new ArrayList<>();
+        restaurantList = serviceRest.allRestaurants(); //errado
+        RestaurantModel restaurantOrder; //errado
+        if (!restaurantList.isEmpty()) {
+            int indice = MapFoodUtils.getRandomNumber(0, restaurantList.size());
+            restaurantOrder = restaurantList.get(indice);
+        }
+        return null;//restaurantOrder;
     }
-    	
-	private void populateRestaurant() {
+
+    public static ClientModel randomClient(OrderService service) {
+        List<ClientModel> clientList = new ArrayList<>();
+        clientList = service.allClients();
+        ClientModel clientOrder;
+        int indice = MapFoodUtils.getRandomNumber(0, clientList.size());
+        clientOrder = clientList.get(indice);
+        return clientOrder;
+    }
+
+    private void populateOrders() {
+
+        OrderModel.OrderModelBuilder builder = OrderModel.builder();
+        RestaurantModel restaurant = randomRestaurant();
+        builder.withRestaurant(restaurant);
+        //builder.withClient(randomClient(service));
+    }
+
+    private void populateRestaurant() {
         try {
             Map<String, List<ItemModel>> items = readItems();
             handleCSV(RESTAURANT_CSV).forEach(line -> {
@@ -91,28 +91,28 @@ public class Application implements CommandLineRunner {
 
                 CSVContentScanner.useDelimiter(DELIMITER);
 
-                while(CSVContentScanner.hasNext()){
+                while (CSVContentScanner.hasNext()) {
                     String content = CSVContentScanner.next();
-                    switch(index){
-                        case 0 :
+                    switch (index) {
+                        case 0:
                             id = content;
                             break;
-                        case 1 :
+                        case 1:
                             builder.withRestaurant(content);
                             break;
-                        case 2 :
+                        case 2:
                             builder.withAdressCity(content);
                             break;
-                        case 3 :
-                        case 4 :
+                        case 3:
+                        case 4:
                             try {
                                 position.add(Double.parseDouble(content));
-                            }catch (NumberFormatException e){
+                            } catch (NumberFormatException e) {
                                 System.out.println("Error:" + e.getMessage() + "For restaurant ID: " + id);
                                 position.add(0.0);
                             }
                             break;
-                        case 5 :
+                        case 5:
                             builder.withDishdescription(content);
                             break;
                     }
@@ -121,7 +121,7 @@ public class Application implements CommandLineRunner {
 
                 orderService.createRestaurant(builder
                         .withRestaurantId(id)
-                        .withPosition(new Position(position.get(1),position.get(0)))
+                        .withPosition(new Position(position.get(1), position.get(0)))
                         .withMenu(items.get(id))
                         .build());
                 CSVContentScanner.close();
@@ -140,23 +140,23 @@ public class Application implements CommandLineRunner {
                 CSVContentScanner.useDelimiter(DELIMITER);
                 String restaurantId = "";
                 ItemModel.ItemModelBuilder builder = ItemModel.builder();
-                int index =0;
-                while(CSVContentScanner.hasNext()){
+                int index = 0;
+                while (CSVContentScanner.hasNext()) {
                     String content = CSVContentScanner.next();
-                    switch(index){
-                        case 0 :
+                    switch (index) {
+                        case 0:
                             builder.withItemDescription(content);
                             break;
-                        case 1 :
+                        case 1:
                             builder.withItemId(content);
                             break;
-                        case 2 :
+                        case 2:
                             restaurantId = content;
                             break;
-                        case 4 :
+                        case 4:
                             builder.withClassification(content);
                             break;
-                        case 5 :
+                        case 5:
                             builder.withUnitPrice(Double.parseDouble(content));
                             break;
                     }
@@ -167,9 +167,9 @@ public class Application implements CommandLineRunner {
                     return v;
                 });
                 items.computeIfAbsent(restaurantId, list -> {
-                 List<ItemModel> itemsList = new ArrayList<>();
-                 itemsList.add(builder.build());
-                 return itemsList;
+                    List<ItemModel> itemsList = new ArrayList<>();
+                    itemsList.add(builder.build());
+                    return itemsList;
                 });
 
                 CSVContentScanner.close();
@@ -184,20 +184,17 @@ public class Application implements CommandLineRunner {
         try {
             handleCSV(CLIENT_CSV).forEach(line -> {
                 int index = 0;
-                int id = 0;
+                String id = "0";
                 List<Double> position = new ArrayList<>();
                 Scanner CSVContentScanner = new Scanner(line);
 
                 CSVContentScanner.useDelimiter(DELIMITER);
 
-                while(CSVContentScanner.hasNext()){
+                while (CSVContentScanner.hasNext()) {
                     String content = CSVContentScanner.next();
-                    switch(index){
-                        case 0 :
-                            id = Integer.parseInt(content);
-                            break;
-                        case 1 :
-                        case 2 :
+                    switch (index) {
+                        case 1:
+                        case 2:
                             position.add(Double.parseDouble(content));
                             break;
                     }
@@ -206,7 +203,7 @@ public class Application implements CommandLineRunner {
 
                 orderService.createClient(ClientModel.builder()
                         .withIdClient(id)
-                        .withPosition(new Position(position.get(1),position.get(0)))
+                        .withPosition(new Position(position.get(1), position.get(0)))
                         .build());
 
                 CSVContentScanner.close();
@@ -226,14 +223,14 @@ public class Application implements CommandLineRunner {
 
                 CSVContentScanner.useDelimiter(DELIMITER);
 
-                while(CSVContentScanner.hasNext()){
+                while (CSVContentScanner.hasNext()) {
                     String content = CSVContentScanner.next();
-                    switch(index){
-                        case 0 :
+                    switch (index) {
+                        case 0:
                             id = Integer.parseInt(content);
                             break;
-                        case 1 :
-                        case 2 :
+                        case 1:
+                        case 2:
                             position.add(Double.parseDouble(content));
                             break;
                     }
@@ -241,7 +238,7 @@ public class Application implements CommandLineRunner {
                 }
                 logisticService.createMotoboy(MotoboyModel.builder()
                         .withIdMotoBoy(id)
-                        .withPosition(new Position(position.get(1),position.get(0)))
+                        .withPosition(new Position(position.get(1), position.get(0)))
                         .withDelivery(new ArrayList<>())
                         .build());
 
@@ -271,7 +268,6 @@ public class Application implements CommandLineRunner {
 
         return csvLines;
     }
-    
-    
-    
+
+
 }
