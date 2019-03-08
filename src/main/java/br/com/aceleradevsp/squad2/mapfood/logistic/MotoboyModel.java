@@ -1,6 +1,7 @@
 package br.com.aceleradevsp.squad2.mapfood.logistic;
 
 import br.com.aceleradevsp.squad2.mapfood.order.ItemModel;
+import br.com.aceleradevsp.squad2.mapfood.order.OrderModel;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,7 +20,7 @@ public class MotoboyModel {
     private List<ItemModel> delivery;
 
 
-    public MotoboyModel(){
+    public MotoboyModel() {
     }
 
     public MotoboyModel(Integer idMotoBoy, double[] postiion, List<ItemModel> delivery) {
@@ -44,6 +45,10 @@ public class MotoboyModel {
         this.position = position;
     }
 
+    public static MotoboyModelBuilder builder() {
+        return new MotoboyModelBuilder();
+    }
+
     public List<ItemModel> getDelivery() {
         return delivery;
     }
@@ -51,11 +56,6 @@ public class MotoboyModel {
     public void setDelivery(List<ItemModel> delivery) {
         this.delivery = delivery;
     }
-
-    public static MotoboyModelBuilder builder(){
-        return new MotoboyModelBuilder();
-    }
-
 
     public static class MotoboyModelBuilder {
         private Integer idMotoBoy;

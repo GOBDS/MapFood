@@ -8,15 +8,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ClientModel {
 
     @Id
-    private Integer idClient;
+    private String idClient;
 
     @GeoSpatialIndexed
     private double[] position;
 
-    public ClientModel(){
+    public ClientModel() {
     }
 
-    public ClientModel(Integer idClient, double[] position) {
+    public ClientModel(String idClient, double[] position) {
         this.idClient = idClient;
         this.position = position;
     }
@@ -29,23 +29,23 @@ public class ClientModel {
         this.position = position;
     }
 
-    public Integer getIdCliente() {
-        return idClient;
-    }
-
-    public void setIdCliente(Integer idClient) {
-        this.idClient = idClient;
-    }
-
-    public static ClientModelBuilder builder(){
+    public static ClientModelBuilder builder() {
         return new ClientModelBuilder();
     }
 
+    public String getIdCliente() {
+        return idClient;
+    }
+
+    public void setIdCliente(String idClient) {
+        this.idClient = idClient;
+    }
+
     public static class ClientModelBuilder {
-        private Integer idClient;
+        private String idClient;
         private double[] position;
 
-        public ClientModelBuilder withIdClient(Integer idClient) {
+        public ClientModelBuilder withIdClient(String idClient) {
 
             this.idClient = idClient;
             return this;

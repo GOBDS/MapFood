@@ -8,6 +8,9 @@ import br.com.aceleradevsp.squad2.mapfood.order.OrderService;
 import br.com.aceleradevsp.squad2.mapfood.order.RestaurantModel;
 
 import org.slf4j.Logger;
+import br.com.aceleradevsp.squad2.mapfood.order.*;
+import br.com.aceleradevsp.squad2.mapfood.utils.MapFoodUtils;
+import com.mongodb.client.model.geojson.Position;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -36,7 +39,7 @@ public class Application implements CommandLineRunner {
     private OrderService orderService;
 
     @Autowired
-    public Application(LogisticService logisticService,  OrderService orderService) {
+    public Application(LogisticService logisticService, OrderService orderService) {
         this.logisticService = logisticService;
         this.orderService = orderService;
     }
@@ -51,6 +54,38 @@ public class Application implements CommandLineRunner {
         populateMotoboy();
         populateClient();
         populateRestaurant();
+        //populateOrders();
+    }
+
+
+    public static RestaurantModel randomRestaurant() {
+
+        OrderService serviceRest = null; //errado
+        List<RestaurantModel> restaurantList = new ArrayList<>();
+        restaurantList = serviceRest.allRestaurants(); //errado
+        RestaurantModel restaurantOrder; //errado
+        if (!restaurantList.isEmpty()) {
+            int indice = MapFoodUtils.getRandomNumber(0, restaurantList.size());
+            restaurantOrder = restaurantList.get(indice);
+        }
+        return null;//restaurantOrder;
+    }
+
+    public static ClientModel randomClient(OrderService service) {
+        List<ClientModel> clientList = new ArrayList<>();
+        clientList = service.allClients();
+        ClientModel clientOrder;
+        int indice = MapFoodUtils.getRandomNumber(0, clientList.size());
+        clientOrder = clientList.get(indice);
+        return clientOrder;
+    }
+
+    private void populateOrders() {
+
+        OrderModel.OrderModelBuilder builder = OrderModel.builder();
+        RestaurantModel restaurant = randomRestaurant();
+        builder.withRestaurant(restaurant);
+        //builder.withClient(randomClient(service));
     }
 
     private void populateRestaurant() {
@@ -70,10 +105,10 @@ public class Application implements CommandLineRunner {
                         case 0 :
                             id = content;
                             break;
-                        case 1 :
+                        case 1:
                             builder.withRestaurant(content);
                             break;
-                        case 2 :
+                        case 2:
                             builder.withAdressCity(content);
                             break;
                         case 3 :
@@ -82,7 +117,7 @@ public class Application implements CommandLineRunner {
                         case 4 :
                             position[0] = parseDouble(content);
                             break;
-                        case 5 :
+                        case 5:
                             builder.withDishdescription(content);
                             break;
                         default:
@@ -91,7 +126,7 @@ public class Application implements CommandLineRunner {
                     index++;
                 }
 
-                orderService.createRestaurante(builder
+                orderService.createRestaurant(builder
                         .withRestaurantId(id)
                         .withPosition(position)
                         .withMenu(items.get(id))
@@ -154,7 +189,7 @@ public class Application implements CommandLineRunner {
         handleCSV(CLIENT_CSV).forEach(line -> {
             try(Scanner csvContentScanner = new Scanner(line)) {
                 int index = 0;
-                int id = 0;
+                String id = "";
                 double[] position = new double[2];
 
                 csvContentScanner.useDelimiter(DELIMITER);
@@ -163,7 +198,7 @@ public class Application implements CommandLineRunner {
                     String content = csvContentScanner.next();
                     switch(index){
                         case 0 :
-                            id = Integer.parseInt(content);
+                            id = content;
                             break;
                         case 1 :
                             position[1] = Double.parseDouble(content);

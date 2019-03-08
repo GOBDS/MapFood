@@ -1,4 +1,4 @@
-package br.com.aceleradevsp.squad2.mapfood;
+package br.com.aceleradevsp.squad2.mapfood.order;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,8 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ApplicationTest {
-
+public class OrderControllerTest {
     @Test
     public void context(){
 
