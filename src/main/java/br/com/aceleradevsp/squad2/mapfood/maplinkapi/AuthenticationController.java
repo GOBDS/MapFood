@@ -15,7 +15,7 @@ public class AuthenticationController {
         this.service = service;
     }
 
-    private Authentication login() {
+    public Authentication login() {
         return service.login();
     }
 
