@@ -26,6 +26,10 @@ public class LogisticService {
     private JobController jobController;
     private SolutionController solutionController;
 
+    public MotoboyModel createMotoboy(MotoboyModel motoboy) {
+        return repository.save(motoboy);
+    }
+
     @Autowired
     public LogisticService(MotoboyRepository repository, PostProblemController problemController, AuthenticationController authController, JobController jobController, SolutionController solutionController) {
         this.repository = repository;
