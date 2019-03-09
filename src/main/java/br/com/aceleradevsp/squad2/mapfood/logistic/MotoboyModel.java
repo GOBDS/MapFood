@@ -1,11 +1,10 @@
 package br.com.aceleradevsp.squad2.mapfood.logistic;
 
-import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Solution;
-import br.com.aceleradevsp.squad2.mapfood.order.OrderModel;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Document(collection = "motoboy")
@@ -17,28 +16,16 @@ public class MotoboyModel {
     @GeoSpatialIndexed
     private double[] position;
 
-    private List<OrderModel> delivery;
-
-    private List<Solution> routes;
+    private List<DeliverModel> deliveries;
 
     public MotoboyModel() {
     }
 
-    public MotoboyModel(Integer idMotoBoy, double[] position, List<OrderModel> delivery, List<Solution> routes) {
+    public MotoboyModel(Integer idMotoBoy, double[] position, List<DeliverModel> deliveries) {
         this.idMotoBoy = idMotoBoy;
         this.position = position;
-        this.delivery = delivery;
-        this.routes = routes;
+        this.deliveries = deliveries;
     }
-
-    public List<Solution> getRoutes() {
-        return routes;
-    }
-
-    public void setRoutes(List<Solution> routes) {
-        this.routes = routes;
-    }
-
 
     public Integer getIdMotoBoy() {
         return idMotoBoy;
@@ -60,12 +47,21 @@ public class MotoboyModel {
         return new MotoboyModelBuilder();
     }
 
-    public List<OrderModel> getDelivery() {
-        return delivery;
+    @Override
+    public String toString() {
+        return "MotoboyModel{" +
+                "idMotoBoy=" + idMotoBoy +
+                ", position=" + Arrays.toString(position) +
+                ", deliveries=" + deliveries +
+                '}';
     }
 
-    public void setDelivery(List<OrderModel> delivery) {
-        this.delivery = delivery;
+    public List<DeliverModel> getDeliveries() {
+        return deliveries;
+    }
+
+    public void setDeliveries(List<DeliverModel> deliveries) {
+        this.deliveries = deliveries;
     }
 
     public static class MotoboyModelBuilder {
@@ -74,9 +70,7 @@ public class MotoboyModel {
         @GeoSpatialIndexed
         private double[] position;
 
-        private List<OrderModel> delivery;
-
-        private List<Solution> routes;
+        private List<DeliverModel> deliveries;
 
         public MotoboyModelBuilder withIdMotoBoy(Integer idMotoBoy) {
             this.idMotoBoy = idMotoBoy;
@@ -88,18 +82,13 @@ public class MotoboyModel {
             return this;
         }
 
-        public MotoboyModelBuilder withDelivery(List<OrderModel> delivery) {
-            this.delivery = delivery;
-            return this;
-        }
-
-        public MotoboyModelBuilder withRoutes(List<Solution> routes) {
-            this.routes = routes;
+        public MotoboyModelBuilder withDelivery(List<DeliverModel> deliveries) {
+            this.deliveries = deliveries;
             return this;
         }
 
         public MotoboyModel build() {
-            return new MotoboyModel(idMotoBoy, position, delivery, routes);
+            return new MotoboyModel(idMotoBoy, position, deliveries);
         }
     }
 }

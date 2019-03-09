@@ -65,6 +65,17 @@ public class OrderModel {
         this.orderId = orderId;
     }
 
+    @Override
+    public String toString() {
+        return "OrderModel{" +
+                "orderId='" + orderId + '\'' +
+                ", client=" + client +
+                ", restaurant=" + restaurant +
+                ", products=" + products +
+                ", date=" + date +
+                '}';
+    }
+
     public List<ItemModel> getProducts() {
         return products;
     }

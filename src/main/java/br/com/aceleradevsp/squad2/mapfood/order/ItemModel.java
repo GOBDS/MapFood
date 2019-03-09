@@ -62,6 +62,16 @@ public class ItemModel {
         private String classification;
         private double unitPrice;
 
+        @Override
+        public String toString() {
+            return "ItemModelBuilder{" +
+                    "itemId='" + itemId + '\'' +
+                    ", itemDescription='" + itemDescription + '\'' +
+                    ", classification='" + classification + '\'' +
+                    ", unitPrice=" + unitPrice +
+                    '}';
+        }
+
         public ItemModelBuilder withItemId(String itemId) {
 
             this.itemId = itemId;

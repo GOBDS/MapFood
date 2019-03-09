@@ -1,7 +1,6 @@
 package br.com.aceleradevsp.squad2.mapfood.order;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "client")
@@ -10,7 +9,6 @@ public class ClientModel {
     @Id
     private String idClient;
 
-    @GeoSpatialIndexed
     private double[] position;
 
     public ClientModel() {

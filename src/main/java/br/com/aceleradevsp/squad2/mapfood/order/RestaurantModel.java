@@ -1,7 +1,6 @@
 package br.com.aceleradevsp.squad2.mapfood.order;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ public class RestaurantModel {
 
     private String adressCity;
 
-    @GeoSpatialIndexed
     private double[] position;
 
     private String dishDescription;
