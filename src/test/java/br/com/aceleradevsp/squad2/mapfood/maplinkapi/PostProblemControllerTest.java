@@ -3,6 +3,7 @@ package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Authentication;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PointMap;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PostObject;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions.TokenExpiredException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +39,7 @@ public class PostProblemControllerTest {
         pointMaps.add(client);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = TokenExpiredException.class)
     public void postProblemWithExpiredTokenShouldReturn401() {
         //Given
         String tokenExpired = "ynsHq0dRDKam6FgGQfgVtiiFXmbc";
