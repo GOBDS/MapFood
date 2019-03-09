@@ -9,6 +9,7 @@ import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Points;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PostObject;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Solution;
 import br.com.aceleradevsp.squad2.mapfood.order.OrderModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.*;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +31,7 @@ public class PlanRoutes {
 
     private DeliverModel deliver;
 
+    @Autowired
     public PlanRoutes(PostProblemController problemController, AuthenticationController authController, JobController jobController, SolutionController solutionController, MotoboyRepository repository, LogisticService service) {
         this.problemController = problemController;
         this.authController = authController;
