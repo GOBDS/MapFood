@@ -14,6 +14,10 @@ public class OrderService {
     private RestaurantRepository restaurantRepo;
     private LogisticService logisticService;
 
+    public OrderService() {
+		// TODO Auto-generated constructor stub
+	}
+    
     @Autowired
     public OrderService(ClientRepository clientRepo, OrderRepository orderRepo, RestaurantRepository restaurantRepo, LogisticService logisticService) {
         this.clientRepo = clientRepo;
@@ -38,6 +42,11 @@ public class OrderService {
         return restaurantRepo.findAll();
     }
 
+    
+    public OrderModel save (OrderModel order) {
+    	return orderRepo.save(order);
+    }
+    
 
     public OrderModel postOrder(OrderModel order) {
         ClientModel client = createClient(order.getClient());

@@ -54,40 +54,8 @@ public class Application implements CommandLineRunner {
         populateMotoboy();
         populateClient();
         populateRestaurant();
-        //populateOrders();
     }
-
-
-    public static RestaurantModel randomRestaurant() {
-
-        OrderService serviceRest = null; //errado
-        List<RestaurantModel> restaurantList = new ArrayList<>();
-        restaurantList = serviceRest.allRestaurants(); //errado
-        RestaurantModel restaurantOrder; //errado
-        if (!restaurantList.isEmpty()) {
-            int indice = MapFoodUtils.getRandomNumber(0, restaurantList.size());
-            restaurantOrder = restaurantList.get(indice);
-        }
-        return null;//restaurantOrder;
-    }
-
-    public static ClientModel randomClient(OrderService service) {
-        List<ClientModel> clientList = new ArrayList<>();
-        clientList = service.allClients();
-        ClientModel clientOrder;
-        int indice = MapFoodUtils.getRandomNumber(0, clientList.size());
-        clientOrder = clientList.get(indice);
-        return clientOrder;
-    }
-
-    private void populateOrders() {
-
-        OrderModel.OrderModelBuilder builder = OrderModel.builder();
-        RestaurantModel restaurant = randomRestaurant();
-        builder.withRestaurant(restaurant);
-        //builder.withClient(randomClient(service));
-    }
-
+   
     private void populateRestaurant() {
         Map<String, List<ItemModel>> items = readItems();
         handleCSV(RESTAURANT_CSV).forEach(line -> {
