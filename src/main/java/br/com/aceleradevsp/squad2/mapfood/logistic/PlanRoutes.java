@@ -32,13 +32,12 @@ public class PlanRoutes {
     private DeliverModel deliver;
 
     @Autowired
-    public PlanRoutes(PostProblemController problemController, AuthenticationController authController, JobController jobController, SolutionController solutionController, MotoboyRepository repository, LogisticService service) {
+    public PlanRoutes(PostProblemController problemController, AuthenticationController authController, JobController jobController, SolutionController solutionController, MotoboyRepository repository) {
         this.problemController = problemController;
         this.authController = authController;
         this.jobController = jobController;
         this.solutionController = solutionController;
         this.repository = repository;
-        this.service = service;
     }
 
     public GeoResults<MotoboyModel> getNearestMotoboy(double latitute, double longitude) {
@@ -49,7 +48,8 @@ public class PlanRoutes {
         return authController.getTokenValid();
     }
 
-    public void startPlanningToRestaurant(OrderModel order) {
+    public void startPlanningToRestaurant(OrderModel order, LogisticService service) {
+        this.service = service;
         double[] restaurantPosition = order.getRestaurant().getPosition();
         GeoResults<MotoboyModel> nearestMotoboy = getNearestMotoboy(restaurantPosition[0], restaurantPosition[1]);
         int times = 1;

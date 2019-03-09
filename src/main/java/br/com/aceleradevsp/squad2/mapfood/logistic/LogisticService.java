@@ -21,7 +21,7 @@ public class LogisticService {
     }
 
     public void startPlans(OrderModel order) {
-        planRoutes.startPlanningToRestaurant(order);
+        planRoutes.startPlanningToRestaurant(order, this);
     }
 
     public void updateMotoboy(MotoboyModel motoboyModel) {
