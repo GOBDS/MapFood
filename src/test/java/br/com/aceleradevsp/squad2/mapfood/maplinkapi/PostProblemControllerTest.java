@@ -1,7 +1,7 @@
 package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
 
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Authentication;
-import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PointMap;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Points;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PostObject;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions.TokenExpiredException;
 import org.junit.Before;
@@ -27,16 +27,16 @@ public class PostProblemControllerTest {
     @Autowired
     private AuthenticationController authController;
 
-    private List<PointMap> pointMaps;
+    private List<Points> points;
 
     @Before
     public void setUp() {
-        PointMap restaurant = new PointMap(-22.440460, -46.982140, "Restaurant 1");
-        PointMap client = new PointMap(-22.431360, -46.955650, "Client X");
+        Points restaurant = new Points(-22.440460, -46.982140, "Restaurant 1");
+        Points client = new Points(-22.431360, -46.955650, "Client X");
 
-        pointMaps = new ArrayList<>();
-        pointMaps.add(restaurant);
-        pointMaps.add(client);
+        points = new ArrayList<>();
+        points.add(restaurant);
+        points.add(client);
     }
 
     @Test(expected = TokenExpiredException.class)
@@ -44,7 +44,7 @@ public class PostProblemControllerTest {
         //Given
         String tokenExpired = "ynsHq0dRDKam6FgGQfgVtiiFXmbc";
         PostObject object = new PostObject();
-        object.setPointMaps(pointMaps);
+        object.setPoints(points);
 
         //When
         PostObject problem = controller.sendProblem(object, tokenExpired);
@@ -62,7 +62,7 @@ public class PostProblemControllerTest {
         assertNotNull(login.getAccessToken());
 
         PostObject object = new PostObject();
-        object.setPointMaps(pointMaps);
+        object.setPoints(points);
 
 
         //When

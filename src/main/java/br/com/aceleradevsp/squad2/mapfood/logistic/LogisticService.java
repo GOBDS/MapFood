@@ -5,7 +5,7 @@ import br.com.aceleradevsp.squad2.mapfood.maplinkapi.JobController;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.PostProblemController;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.SolutionController;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Job;
-import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PointMap;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Points;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PostObject;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Solution;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions.ObjectNotFoundException;
@@ -59,16 +59,16 @@ public class LogisticService {
     }
 
     private void calculateRouteToRestaurant(OrderModel order, MotoboyModel motoboyModel) {
-        PointMap restaurantLocation =
-                new PointMap(order.getRestaurant().getPosition()[0], order.getRestaurant().getPosition()[1]);
-        PointMap motoboyLocation =
-                new PointMap(motoboyModel.getPosition()[0], motoboyModel.getPosition()[1]);
+        Points restaurantLocation =
+                new Points(order.getRestaurant().getPosition()[0], order.getRestaurant().getPosition()[1]);
+        Points motoboyLocation =
+                new Points(motoboyModel.getPosition()[0], motoboyModel.getPosition()[1]);
 
-        List<PointMap> pointMaps = new ArrayList<>();
-        pointMaps.add(motoboyLocation);
-        pointMaps.add(restaurantLocation);
+        List<Points> points = new ArrayList<>();
+        points.add(motoboyLocation);
+        points.add(restaurantLocation);
 
-        PostObject object = new PostObject(pointMaps);
+        PostObject object = new PostObject(points);
 
         PostObject problem = problemController.sendProblem(object, getToken());
 

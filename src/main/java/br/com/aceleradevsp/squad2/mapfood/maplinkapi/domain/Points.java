@@ -1,20 +1,20 @@
 package br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain;
 
-public class PointMap {
+public class Points {
 
     private Double latitude;
     private Double longitude;
     private String siteId;
 
-    public PointMap() {
+    public Points() {
     }
 
-    public PointMap(Double latitude, Double longitude) {
+    public Points(Double latitude, Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public PointMap(Double latitude, Double longitude, String siteId) {
+    public Points(Double latitude, Double longitude, String siteId) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.siteId = siteId;

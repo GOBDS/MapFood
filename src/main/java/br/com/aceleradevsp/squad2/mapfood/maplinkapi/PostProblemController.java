@@ -17,7 +17,7 @@ public class PostProblemController {
 
 
     public PostObject sendProblem(PostObject object, String token) {
-        if (object.getPointMaps().size() >= 2) {
+        if (object.getPoints().size() >= 2) {
             HttpHeaders header = new HttpHeaders();
             header.setContentType(MediaType.APPLICATION_JSON);
             header.setBearerAuth(token);
