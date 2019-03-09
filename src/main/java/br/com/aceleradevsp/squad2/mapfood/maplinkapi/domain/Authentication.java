@@ -1,7 +1,9 @@
 package br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "authentication")
 public class Authentication {
 
     @JsonProperty("refresh_token_expires_in")
@@ -28,13 +30,21 @@ public class Authentication {
     public Authentication() {
     }
 
-    public Authentication(String apiProductList, String tokenType, String accessToken, String applicationName, String expiresIn, String status) {
+    public Authentication(String apiProductList, String issuedAt, String accessToken, String applicationName, String expiresIn, String status) {
         this.apiProductList = apiProductList;
-        this.tokenType = tokenType;
+        this.issuedAt = issuedAt;
         this.accessToken = accessToken;
         this.applicationName = applicationName;
         this.expiresIn = expiresIn;
         this.status = status;
+    }
+
+    public String getIssuedAt() {
+        return issuedAt;
+    }
+
+    public void setIssuedAt(String issuedAt) {
+        this.issuedAt = issuedAt;
     }
 
     public String getRefreshTokenExpiresIn() {
