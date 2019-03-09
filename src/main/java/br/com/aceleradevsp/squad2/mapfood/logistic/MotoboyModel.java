@@ -1,5 +1,6 @@
 package br.com.aceleradevsp.squad2.mapfood.logistic;
 
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Solution;
 import br.com.aceleradevsp.squad2.mapfood.order.OrderModel;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
@@ -18,15 +19,26 @@ public class MotoboyModel {
 
     private List<OrderModel> delivery;
 
+    private List<Solution> routes;
 
     public MotoboyModel() {
     }
 
-    public MotoboyModel(Integer idMotoBoy, double[] position, List<OrderModel> delivery) {
+    public MotoboyModel(Integer idMotoBoy, double[] position, List<OrderModel> delivery, List<Solution> routes) {
         this.idMotoBoy = idMotoBoy;
         this.position = position;
         this.delivery = delivery;
+        this.routes = routes;
     }
+
+    public List<Solution> getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(List<Solution> routes) {
+        this.routes = routes;
+    }
+
 
     public Integer getIdMotoBoy() {
         return idMotoBoy;
@@ -64,6 +76,8 @@ public class MotoboyModel {
 
         private List<OrderModel> delivery;
 
+        private List<Solution> routes;
+
         public MotoboyModelBuilder withIdMotoBoy(Integer idMotoBoy) {
             this.idMotoBoy = idMotoBoy;
             return this;
@@ -79,8 +93,13 @@ public class MotoboyModel {
             return this;
         }
 
+        public MotoboyModelBuilder withRoutes(List<Solution> routes) {
+            this.routes = routes;
+            return this;
+        }
+
         public MotoboyModel build() {
-            return new MotoboyModel(idMotoBoy, position, delivery);
+            return new MotoboyModel(idMotoBoy, position, delivery, routes);
         }
     }
 }

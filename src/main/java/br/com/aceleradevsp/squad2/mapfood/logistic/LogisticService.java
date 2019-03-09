@@ -74,7 +74,8 @@ public class LogisticService {
 
         if (problem.getId() != null) {
             try {
-                startMonitoring(problem);
+                motoboyModel.getDelivery().add(order);
+                startMonitoring(problem, motoboyModel);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -85,7 +86,7 @@ public class LogisticService {
         return authController.getTokenValid();
     }
 
-    private void startMonitoring(PostObject problem) throws InterruptedException {
+    private void startMonitoring(PostObject problem, MotoboyModel motoboyModel) throws InterruptedException {
         int percent = 0;
         Job job;
         while (percent != 100) {
@@ -93,13 +94,13 @@ public class LogisticService {
             percent = Integer.parseInt(job.getPercent());
             Thread.sleep(2000);
         }
-        getSolution(problem);
+        getSolution(problem, motoboyModel);
     }
 
-    private void getSolution(PostObject problem) {
+    private void getSolution(PostObject problem, MotoboyModel motoboyModel) {
         Solution solution = solutionController.getSolutionById(getToken(), problem.getId());
         if (solution.getId() != null) {
-            //Implement here how to send the position to motoboy.
+            motoboyModel.getRoutes().add(solution);
         }
     }
 }
