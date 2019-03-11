@@ -6,15 +6,12 @@ import br.com.aceleradevsp.squad2.mapfood.logistic.MotoboyRepository;
 import br.com.aceleradevsp.squad2.mapfood.motosimulator.SchedulerMotoboy;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.geo.*;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.Duration;
-import java.time.Instant;
 
 import static org.hamcrest.core.Is.is;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
