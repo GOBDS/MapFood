@@ -13,10 +13,15 @@ public class SchedulerMotoboy {
     @Autowired
     Timer timer;
 
-    @Autowired
+
     MongoTemplate mongoTemplate;
 
+    @Autowired
+    public SchedulerMotoboy(MongoTemplate template) {
+        this.mongoTemplate = template;
+    }
+
     public void schedule(Integer idMotoboy, Double latitue, Double longitude, Duration trigger) {
-        timer.schedule(new UpdateMotoboy(mongoTemplate,idMotoboy,latitue,longitude), trigger.toMillis());
+        timer.schedule(new UpdateMotoboy(mongoTemplate, idMotoboy, latitue, longitude), trigger.toMillis());
     }
 }
