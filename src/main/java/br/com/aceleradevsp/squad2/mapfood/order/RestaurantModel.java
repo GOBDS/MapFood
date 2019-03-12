@@ -25,7 +25,7 @@ public class RestaurantModel {
     public RestaurantModel() {
     }
 
-    public RestaurantModel(String restaurantId, String restaurant, String adressCity, double[] position, String dishdescription, List<ItemModel> menu) {
+    public RestaurantModel(String restaurantId, String restaurant, String adressCity, double[] position, String dishDescription, List<ItemModel> menu) {
         this.restaurantId = restaurantId;
         this.restaurant = restaurant;
         this.adressCity = adressCity;

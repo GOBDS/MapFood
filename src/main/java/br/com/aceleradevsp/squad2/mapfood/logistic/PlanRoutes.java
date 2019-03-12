@@ -50,7 +50,7 @@ public class PlanRoutes {
         return authController.getTokenValid();
     }
 
-    public void startPlanningToRestaurant(OrderModel order, LogisticService service) {
+    public void startPlanningToRestaurant(OrderModel order, LogisticService service) throws InterruptedException {
         this.service = service;
         double[] restaurantPosition = order.getRestaurant().getPosition();
         GeoResults<MotoboyModel> nearestMotoboy = getNearestMotoboy(restaurantPosition[0], restaurantPosition[1]);
@@ -65,11 +65,7 @@ public class PlanRoutes {
                     .stream()
                     .filter(motoboyModelGeoResult -> motoboyModelGeoResult.getContent().getDeliveries().size() <= 5)
                     .findFirst();
-            try {
-                Thread.sleep(60000);
-            } catch (InterruptedException e) {
-                logger.error(e.getMessage());
-            }
+            Thread.sleep(60000);
             times++;
         }
 
@@ -84,7 +80,7 @@ public class PlanRoutes {
         }
     }
 
-    private void calculateRouteToRestaurant(OrderModel order, MotoboyModel motoboyModel) {
+    private void calculateRouteToRestaurant(OrderModel order, MotoboyModel motoboyModel) throws InterruptedException {
         Points restaurantLocation =
                 new Points(order.getRestaurant().getPosition()[0], order.getRestaurant().getPosition()[1]);
         Points motoboyLocation =
@@ -99,12 +95,8 @@ public class PlanRoutes {
         PostObject problem = problemController.sendProblem(object, getToken());
 
         if (problem.getId() != null) {
-            try {
-                deliver.setOrderModel(order);
-                startMonitoringRestaurant(problem, motoboyModel);
-            } catch (InterruptedException e) {
-                logger.error(e.getMessage());
-            }
+            deliver.setOrderModel(order);
+            startMonitoringRestaurant(problem, motoboyModel);
         }
     }
 
@@ -119,7 +111,7 @@ public class PlanRoutes {
         getSolutionForRestaurant(problem, motoboyModel);
     }
 
-    private void getSolutionForRestaurant(PostObject problem, MotoboyModel motoboyModel) {
+    private void getSolutionForRestaurant(PostObject problem, MotoboyModel motoboyModel) throws InterruptedException {
         Solution solution = solutionController.getSolutionById(getToken(), problem.getId());
         if (solution.getId() != null) {
             deliver.setRouteToRestaurant(solution);
@@ -129,7 +121,7 @@ public class PlanRoutes {
         }
     }
 
-    private void calculateRouteToDeliver(OrderModel order, MotoboyModel motoboyModel) {
+    private void calculateRouteToDeliver(OrderModel order, MotoboyModel motoboyModel) throws InterruptedException {
         Points restaurantLocation =
                 new Points(order.getRestaurant().getPosition()[0], order.getRestaurant().getPosition()[1]);
         Points deliverLocation =
@@ -144,11 +136,7 @@ public class PlanRoutes {
         PostObject problem = problemController.sendProblem(object, getToken());
 
         if (problem.getId() != null) {
-            try {
-                startMonitoringDeliver(problem, motoboyModel);
-            } catch (InterruptedException e) {
-                logger.error(e.getMessage());
-            }
+            startMonitoringDeliver(problem, motoboyModel);
         }
     }
 

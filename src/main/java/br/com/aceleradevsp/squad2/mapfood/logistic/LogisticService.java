@@ -1,6 +1,8 @@
 package br.com.aceleradevsp.squad2.mapfood.logistic;
 
 import br.com.aceleradevsp.squad2.mapfood.order.OrderModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.GeoResults;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LogisticService {
+
+    Logger logger = LoggerFactory.getLogger(LogisticService.class);
 
     private MotoboyRepository repository;
     private PlanRoutes planRoutes;
@@ -25,7 +29,11 @@ public class LogisticService {
     }
 
     public void startPlans(OrderModel order) {
-        planRoutes.startPlanningToRestaurant(order, this);
+        try {
+            planRoutes.startPlanningToRestaurant(order, this);
+        } catch (InterruptedException e) {
+           logger.error(e.getMessage());
+        }
     }
 
     public GeoResults<MotoboyModel> getNearestMotoboy(double latitute, double longitude){

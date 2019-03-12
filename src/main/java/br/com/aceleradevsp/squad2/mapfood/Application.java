@@ -8,9 +8,6 @@ import br.com.aceleradevsp.squad2.mapfood.order.OrderService;
 import br.com.aceleradevsp.squad2.mapfood.order.RestaurantModel;
 
 import org.slf4j.Logger;
-import br.com.aceleradevsp.squad2.mapfood.order.*;
-import br.com.aceleradevsp.squad2.mapfood.utils.MapFoodUtils;
-import com.mongodb.client.model.geojson.Position;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

@@ -21,7 +21,7 @@ import static java.util.Collections.singletonList;
 @Component
 public class AuthenticationService {
 
-    private static Authentication authenticationObject;
+    private Authentication authenticationObject;
 
     @Nullable
     public Authentication login() {
