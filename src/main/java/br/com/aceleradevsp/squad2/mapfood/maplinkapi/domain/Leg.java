@@ -8,12 +8,12 @@ public class Leg {
     private Integer nominalDuration;
     private Double averageSpeed;
     private Integer speedProfilePenalty;
-    private List<Point> points;
+    private List<Points> points;
 
     public Leg() {
     }
 
-    public Leg(Integer distance, Integer nominalDuration, Double averageSpeed, Integer speedProfilePenalty, List<Point> points) {
+    public Leg(Integer distance, Integer nominalDuration, Double averageSpeed, Integer speedProfilePenalty, List<Points> points) {
         this.distance = distance;
         this.nominalDuration = nominalDuration;
         this.averageSpeed = averageSpeed;
@@ -53,11 +53,11 @@ public class Leg {
         this.speedProfilePenalty = speedProfilePenalty;
     }
 
-    public List<Point> getPoints() {
+    public List<Points> getPoints() {
         return points;
     }
 
-    public void setPoints(List<Point> points) {
+    public void setPoints(List<Points> points) {
         this.points = points;
     }
 }

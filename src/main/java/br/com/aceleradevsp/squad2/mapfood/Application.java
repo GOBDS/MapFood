@@ -38,7 +38,7 @@ public class Application implements CommandLineRunner {
     private OrderService orderService;
 
     @Autowired
-    public Application(LogisticService logisticService,  OrderService orderService) {
+    public Application(LogisticService logisticService, OrderService orderService) {
         this.logisticService = logisticService;
         this.orderService = orderService;
     }
@@ -54,7 +54,7 @@ public class Application implements CommandLineRunner {
         populateClient();
         populateRestaurant();
     }
-
+   
     private void populateRestaurant() {
         Map<String, List<ItemModel>> items = readItems();
         handleCSV(RESTAURANT_CSV).forEach(line -> {
@@ -72,10 +72,10 @@ public class Application implements CommandLineRunner {
                         case 0 :
                             id = content;
                             break;
-                        case 1 :
+                        case 1:
                             builder.withRestaurant(content);
                             break;
-                        case 2 :
+                        case 2:
                             builder.withAdressCity(content);
                             break;
                         case 3 :
@@ -84,7 +84,7 @@ public class Application implements CommandLineRunner {
                         case 4 :
                             position[0] = parseDouble(content);
                             break;
-                        case 5 :
+                        case 5:
                             builder.withDishdescription(content);
                             break;
                         default:
@@ -93,7 +93,7 @@ public class Application implements CommandLineRunner {
                     index++;
                 }
 
-                orderService.createRestaurante(builder
+                orderService.createRestaurant(builder
                         .withRestaurantId(id)
                         .withPosition(position)
                         .withMenu(items.get(id))
@@ -156,7 +156,7 @@ public class Application implements CommandLineRunner {
         handleCSV(CLIENT_CSV).forEach(line -> {
             try(Scanner csvContentScanner = new Scanner(line)) {
                 int index = 0;
-                int id = 0;
+                String id = "";
                 double[] position = new double[2];
 
                 csvContentScanner.useDelimiter(DELIMITER);
@@ -165,7 +165,7 @@ public class Application implements CommandLineRunner {
                     String content = csvContentScanner.next();
                     switch(index){
                         case 0 :
-                            id = Integer.parseInt(content);
+                            id = content;
                             break;
                         case 1 :
                             position[1] = Double.parseDouble(content);

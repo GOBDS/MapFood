@@ -1,4 +1,4 @@
-package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
+package br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions;
 
 public class ObjectNotFoundException extends RuntimeException {
 

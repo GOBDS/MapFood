@@ -1,8 +1,10 @@
 package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
 
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Authentication;
-import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Point;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Points;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PostObject;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions.InvalidDataException;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions.TokenExpiredException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,19 +28,19 @@ public class PostProblemControllerTest {
     @Autowired
     private AuthenticationController authController;
 
-    private List<Point> points;
+    private List<Points> points;
 
     @Before
     public void setUp() {
-        Point restaurant = new Point(-22.440460, -46.982140, "Restaurant 1");
-        Point client = new Point(-22.431360, -46.955650, "Client X");
+        Points restaurant = new Points(-22.440460, -46.982140, "Restaurant 1");
+        Points client = new Points(-22.431360, -46.955650, "Client X");
 
         points = new ArrayList<>();
         points.add(restaurant);
         points.add(client);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = TokenExpiredException.class)
     public void postProblemWithExpiredTokenShouldReturn401() {
         //Given
         String tokenExpired = "ynsHq0dRDKam6FgGQfgVtiiFXmbc";
@@ -56,7 +58,7 @@ public class PostProblemControllerTest {
     public void postProblemWithInvalidData() {
         //Given
         String token = "ynsHq0dRDKam6FgGQfgVtiiFXmbc";
-        List<Point> points = new ArrayList<>();
+        List<Points> points = new ArrayList<>();
         PostObject object = new PostObject();
         object.setPoints(points);
 
@@ -89,7 +91,7 @@ public class PostProblemControllerTest {
     @Test(expected = InvalidDataException.class)
     public void getProblemByIdWithInvalidData() {
         //When
-        controller.getProblemById("","");
+        controller.getProblemById("", "");
 
         //Then
         fail("A exceção não ocorreu");
@@ -109,9 +111,9 @@ public class PostProblemControllerTest {
         PostObject response = controller.sendProblem(object, login.getAccessToken());
 
         //when
-        PostObject problem = controller.getProblemById(login.getAccessToken(),response.getId());
+        PostObject problem = controller.getProblemById(login.getAccessToken(), response.getId());
 
         //Then
-        assertThat(problem.getProfileName(),is(response.getProfileName()));
+        assertThat(problem.getProfileName(), is(response.getProfileName()));
     }
 }

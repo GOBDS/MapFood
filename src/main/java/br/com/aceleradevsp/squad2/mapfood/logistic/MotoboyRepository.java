@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MotoboyRepository extends MongoRepository<MotoboyModel,Integer> {
+public interface MotoboyRepository extends MongoRepository<MotoboyModel, Integer> {
 
     GeoResults<MotoboyModel> findByPositionNear(Point position, Distance distance);
 }

@@ -1,6 +1,7 @@
 package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
 
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Job;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;

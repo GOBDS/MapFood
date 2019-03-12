@@ -8,7 +8,7 @@ public class ItemModel {
     private String classification;
     private double unitPrice;
 
-    public ItemModel(){
+    public ItemModel() {
 
     }
 
@@ -51,7 +51,7 @@ public class ItemModel {
         this.unitPrice = unitPrice;
     }
 
-    public static ItemModelBuilder builder(){
+    public static ItemModelBuilder builder() {
         return new ItemModelBuilder();
     }
 
@@ -61,6 +61,16 @@ public class ItemModel {
         private String itemDescription;
         private String classification;
         private double unitPrice;
+
+        @Override
+        public String toString() {
+            return "ItemModelBuilder{" +
+                    "itemId='" + itemId + '\'' +
+                    ", itemDescription='" + itemDescription + '\'' +
+                    ", classification='" + classification + '\'' +
+                    ", unitPrice=" + unitPrice +
+                    '}';
+        }
 
         public ItemModelBuilder withItemId(String itemId) {
 

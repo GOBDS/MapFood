@@ -29,7 +29,8 @@ public class ApplicationTest {
     RestaurantRepository restaurantRepository;
 
     @Test
-    public void contextLoads() {
+    public void context(){
+
     }
 
     @Test

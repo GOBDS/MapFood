@@ -1,6 +1,8 @@
 package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
 
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PostObject;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions.InvalidDataException;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions.TokenExpiredException;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
