@@ -14,9 +14,6 @@ public class OrderService {
     private RestaurantRepository restaurantRepo;
     private LogisticService logisticService;
 
-    public OrderService() {
-    }
-
     @Autowired
     public OrderService(ClientRepository clientRepo, OrderRepository orderRepo, RestaurantRepository restaurantRepo, LogisticService logisticService) {
         this.clientRepo = clientRepo;

@@ -10,15 +10,14 @@ import java.util.Timer;
 @Component
 public class SchedulerMotoboy {
 
-    @Autowired
     Timer timer;
-
 
     MongoTemplate mongoTemplate;
 
     @Autowired
-    public SchedulerMotoboy(MongoTemplate template) {
-        this.mongoTemplate = template;
+    public SchedulerMotoboy(MongoTemplate mongoTemplate, Timer timer) {
+        this.mongoTemplate = mongoTemplate;
+        this.timer = timer;
     }
 
     public void schedule(Integer idMotoboy, Double latitue, Double longitude, Duration trigger) {
