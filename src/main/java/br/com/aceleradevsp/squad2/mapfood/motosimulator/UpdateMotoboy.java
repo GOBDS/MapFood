@@ -12,7 +12,7 @@ public class UpdateMotoboy extends TimerTask {
     Double longitude;
     MongoTemplate mongoTemplate;
 
-    public UpdateMotoboy(MongoTemplate mongoTemplate, Integer idMotoboy, Double latitute, Double longitude){
+    public UpdateMotoboy(MongoTemplate mongoTemplate, Integer idMotoboy, Double latitute, Double longitude) {
         this.idMotoboy = idMotoboy;
         this.latitude = latitute;
         this.longitude = longitude;
@@ -21,7 +21,7 @@ public class UpdateMotoboy extends TimerTask {
 
     @Override
     public void run() {
-        MotoboyModel motoboyModel = mongoTemplate.findById(idMotoboy,MotoboyModel.class);
+        MotoboyModel motoboyModel = mongoTemplate.findById(idMotoboy, MotoboyModel.class);
         double[] position = new double[2];
         position[0] = latitude;
         position[1] = longitude;
