@@ -27,11 +27,7 @@ import java.util.List;
 public class OrderControllerTest {
 
 
-    @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private WebApplicationContext appContext;
 
     @Autowired
     private ClientRepository clientRepository;
@@ -39,9 +35,12 @@ public class OrderControllerTest {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
+    @Autowired
+    private WebApplicationContext appContext;
+
     @Before
     public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(appContext).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(this.appContext).build();
     }
 
     @Test
@@ -50,19 +49,19 @@ public class OrderControllerTest {
         RestaurantModel restaurant = MapFoodUtils.randomRestaurant(restaurantRepository.findAll());
 
         List<ItemModel> products = new ArrayList<>();
-        ItemModel itemModel = restaurant.getMenu().get(MapFoodUtils.getRandomNumber(0, restaurant.getMenu().size()));
+        ItemModel itemModel = restaurant.getMenu().get(MapFoodUtils.getRandomNumber(0, restaurant.getMenu().size() - 1));
         products.add(itemModel);
 
         OrderModel order = new OrderModel();
         order.setClient(client);
         order.setRestaurant(restaurant);
         order.setProducts(products);
-        order.setDate(LocalDate.now());
+        order.setDate(LocalDate.now().toString());
 
         ObjectMapper om = new ObjectMapper();
         try {
             String jsonOrder = om.writeValueAsString(order);
-            ResultActions orders = mockMvc.perform(MockMvcRequestBuilders.post("orders").content(jsonOrder).contentType(MediaType.APPLICATION_JSON));
+            ResultActions orders = this.mockMvc.perform(MockMvcRequestBuilders.post("/orders").content(jsonOrder).contentType(MediaType.APPLICATION_JSON));
             String response = orders.andReturn().getResponse().getContentAsString();
             OrderModel orderDone = om.readValue(response, OrderModel.class);
 

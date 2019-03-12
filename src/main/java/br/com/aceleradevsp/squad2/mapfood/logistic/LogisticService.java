@@ -10,6 +10,9 @@ import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
+
 @Service
 public class LogisticService {
 
@@ -32,16 +35,19 @@ public class LogisticService {
         try {
             planRoutes.startPlanningToRestaurant(order, this);
         } catch (InterruptedException e) {
-           logger.error(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
-    public GeoResults<MotoboyModel> getNearestMotoboy(double latitute, double longitude){
+    public GeoResults<MotoboyModel> getNearestMotoboy(double latitute, double longitude) {
         return repository.findByPositionNear(new Point(latitute, longitude), new Distance(10, Metrics.KILOMETERS));
     }
 
-    public void updateMotoboy(MotoboyModel motoboyModel) {
+    public void updateMotoboyOrders(MotoboyModel motoboyModel) {
         //Implements a send to motoboy.
+        List<DeliverModel> deliveries = motoboyModel.getDeliveries();
+        deliveries.sort(Comparator.comparing(DeliverModel::getTotalDistance));
+
     }
 
 }

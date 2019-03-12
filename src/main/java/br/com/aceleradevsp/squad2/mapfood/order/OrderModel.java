@@ -3,7 +3,6 @@ package br.com.aceleradevsp.squad2.mapfood.order;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Document(collection = "order")
@@ -14,12 +13,12 @@ public class OrderModel {
     private ClientModel client;
     private RestaurantModel restaurant;
     private List<ItemModel> products;
-    private LocalDate date;
+    private String date;
 
     public OrderModel() {
     }
 
-    public OrderModel(String orderId, ClientModel client, RestaurantModel restaurant, List<ItemModel> products, LocalDate date) {
+    public OrderModel(String orderId, ClientModel client, RestaurantModel restaurant, List<ItemModel> products, String date) {
         this.orderId = orderId;
         this.client = client;
         this.restaurant = restaurant;
@@ -31,11 +30,11 @@ public class OrderModel {
         return new OrderModelBuilder();
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -89,7 +88,7 @@ public class OrderModel {
         private ClientModel client;
         private RestaurantModel restaurant;
         private List<ItemModel> products;
-        private LocalDate date;
+        private String date;
 
         public OrderModelBuilder withOrderId(String orderId) {
             this.orderId = orderId;
@@ -111,7 +110,7 @@ public class OrderModel {
             return this;
         }
 
-        public OrderModelBuilder withProduct(LocalDate date) {
+        public OrderModelBuilder withProduct(String date) {
             this.date = date;
             return this;
         }

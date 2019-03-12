@@ -28,18 +28,20 @@ public class PlanRoutes {
     private JobController jobController;
     private SolutionController solutionController;
     private MotoboyRepository repository;
+    private DeliverRepository deliverRepository;
 
     private LogisticService service;
 
-    private DeliverModel deliver;
+    private DeliverModel deliver = new DeliverModel();
 
     @Autowired
-    public PlanRoutes(PostProblemController problemController, AuthenticationController authController, JobController jobController, SolutionController solutionController, MotoboyRepository repository) {
+    public PlanRoutes(PostProblemController problemController, AuthenticationController authController, JobController jobController, SolutionController solutionController, MotoboyRepository repository, DeliverRepository deliverRepository) {
         this.problemController = problemController;
         this.authController = authController;
         this.jobController = jobController;
         this.solutionController = solutionController;
         this.repository = repository;
+        this.deliverRepository = deliverRepository;
     }
 
     public GeoResults<MotoboyModel> getNearestMotoboy(double latitute, double longitude) {
@@ -54,26 +56,17 @@ public class PlanRoutes {
         this.service = service;
         double[] restaurantPosition = order.getRestaurant().getPosition();
         GeoResults<MotoboyModel> nearestMotoboy = getNearestMotoboy(restaurantPosition[0], restaurantPosition[1]);
-        int times = 1;
-        Optional<GeoResult<MotoboyModel>> geoMotoboy = Optional.empty();
-        Optional<GeoResult<MotoboyModel>> geoLastMotoboy = Optional.empty();
-        while (times <= 10) {
-            if (geoMotoboy.isPresent()) {
-                geoLastMotoboy = geoMotoboy;
-            }
-            geoMotoboy = nearestMotoboy.getContent()
-                    .stream()
-                    .filter(motoboyModelGeoResult -> motoboyModelGeoResult.getContent().getDeliveries().size() <= 5)
-                    .findFirst();
-            Thread.sleep(60000);
-            times++;
-        }
+        Optional<GeoResult<MotoboyModel>> geoMotoboy;
+
+        geoMotoboy = nearestMotoboy.getContent()
+                .stream()
+                .filter(motoboyModelGeoResult -> motoboyModelGeoResult.getContent().getDeliveries().size() <= 5)
+                .findFirst();
+
 
         MotoboyModel motoboyModel = null;
         if (geoMotoboy.isPresent()) {
             motoboyModel = geoMotoboy.get().getContent();
-        } else if (geoLastMotoboy.isPresent()) {
-            motoboyModel = geoLastMotoboy.get().getContent();
         }
         if (motoboyModel != null) {
             calculateRouteToRestaurant(order, motoboyModel);
@@ -82,9 +75,9 @@ public class PlanRoutes {
 
     private void calculateRouteToRestaurant(OrderModel order, MotoboyModel motoboyModel) throws InterruptedException {
         Points restaurantLocation =
-                new Points(order.getRestaurant().getPosition()[0], order.getRestaurant().getPosition()[1]);
+                new Points(order.getRestaurant().getPosition()[0], order.getRestaurant().getPosition()[1], "Restaurant");
         Points motoboyLocation =
-                new Points(motoboyModel.getPosition()[0], motoboyModel.getPosition()[1]);
+                new Points(motoboyModel.getPosition()[0], motoboyModel.getPosition()[1], "Motoboy");
 
         List<Points> points = new ArrayList<>();
         points.add(motoboyLocation);
@@ -106,7 +99,11 @@ public class PlanRoutes {
         while (percent != 100) {
             job = jobController.getJobById(getToken(), problem.getId());
             percent = Integer.parseInt(job.getPercent());
-            Thread.sleep(20000);
+            if (percent < 50) {
+                Thread.sleep(2000);
+            } else if (percent != 100) {
+                Thread.sleep(1000);
+            }
         }
         getSolutionForRestaurant(problem, motoboyModel);
     }
@@ -123,9 +120,9 @@ public class PlanRoutes {
 
     private void calculateRouteToDeliver(OrderModel order, MotoboyModel motoboyModel) throws InterruptedException {
         Points restaurantLocation =
-                new Points(order.getRestaurant().getPosition()[0], order.getRestaurant().getPosition()[1]);
+                new Points(order.getRestaurant().getPosition()[0], order.getRestaurant().getPosition()[1], "Restaurant");
         Points deliverLocation =
-                new Points(order.getClient().getPosition()[0], order.getClient().getPosition()[1]);
+                new Points(order.getClient().getPosition()[0], order.getClient().getPosition()[1], "Deliver");
 
         List<Points> points = new ArrayList<>();
         points.add(deliverLocation);
@@ -146,7 +143,11 @@ public class PlanRoutes {
         while (percent != 100) {
             job = jobController.getJobById(getToken(), problem.getId());
             percent = Integer.parseInt(job.getPercent());
-            Thread.sleep(20000);
+            if (percent < 50) {
+                Thread.sleep(2000);
+            } else if (percent != 100) {
+                Thread.sleep(1000);
+            }
         }
         getSolutionForDeliver(problem, motoboyModel);
     }
@@ -158,7 +159,8 @@ public class PlanRoutes {
             deliver.setTotalDistance(deliver.getTotalDistance() + solution.getTotalDistance());
             deliver.setTotalTime(deliver.getTotalTime() + solution.getTotalNominalDuration());
             motoboyModel.getDeliveries().add(deliver);
-            service.updateMotoboy(motoboyModel);
+            deliverRepository.save(deliver);
+            service.updateMotoboyOrders(motoboyModel);
         }
     }
 }

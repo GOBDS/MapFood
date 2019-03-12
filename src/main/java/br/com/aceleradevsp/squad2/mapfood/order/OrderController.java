@@ -2,15 +2,12 @@ package br.com.aceleradevsp.squad2.mapfood.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("orders")
+@RequestMapping("/orders")
 public class OrderController {
 
 
@@ -22,7 +19,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderModel> aNewOrder(OrderModel order) {
+    public ResponseEntity<OrderModel> aNewOrder(@RequestBody OrderModel order) {
         OrderModel orderReceived = service.postOrder(order);
         if (orderReceived.getOrderId() != null) {
             return ResponseEntity.ok(orderReceived);
@@ -33,7 +30,7 @@ public class OrderController {
     @GetMapping("/restaurants")
     public ResponseEntity<List<RestaurantModel>> getRestaurants() {
         return ResponseEntity.ok(service.allRestaurants());
-    }      
-   
-    
+    }
+
+
 }
