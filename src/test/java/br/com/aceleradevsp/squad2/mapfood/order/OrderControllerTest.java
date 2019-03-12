@@ -1,6 +1,7 @@
 package br.com.aceleradevsp.squad2.mapfood.order;
 
 import br.com.aceleradevsp.squad2.mapfood.utils.MapFoodUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,12 @@ public class OrderControllerTest {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    @Autowired
     private TestRestTemplate restTemplate;
+
+    @Before
+    public void init(){
+        restTemplate = new TestRestTemplate();
+    }
 
     @Test
     public void receivingAnOrder() {
@@ -47,7 +52,7 @@ public class OrderControllerTest {
         order.setDate(LocalDate.now().toString());
 
         try {
-            ResponseEntity<OrderModel> responseEntity = restTemplate.postForEntity(URI.create("http://localhost:8080" + "/orders"), order, OrderModel.class);
+            ResponseEntity<OrderModel> responseEntity = restTemplate.postForEntity("/orders", order, OrderModel.class);
 
             assertNotNull(responseEntity);
             assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
