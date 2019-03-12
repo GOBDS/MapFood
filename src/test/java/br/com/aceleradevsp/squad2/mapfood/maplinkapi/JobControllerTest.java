@@ -30,7 +30,7 @@ public class JobControllerTest {
 
         assertNotNull(login.getAccessToken());
 
-        String problemId = "5c7e9fdec079cd0006a1b8df";
+        String problemId = "5c87e2a543804e0006e88a76";
 
         //When
         Job job = controller.getJobById(login.getAccessToken(), problemId);
