@@ -29,7 +29,7 @@ public class MapFoodUtils {
     public static RestaurantModel randomRestaurant(List<RestaurantModel> restaurantList) {
         RestaurantModel restaurantOrder = new RestaurantModel();
         if (!restaurantList.isEmpty()) {
-            int indice = MapFoodUtils.getRandomNumber(0, 10);
+            int indice = MapFoodUtils.getRandomNumber(0, 9);
             restaurantOrder = restaurantList.get(indice);
         }
         return restaurantOrder;
@@ -38,7 +38,7 @@ public class MapFoodUtils {
     public static ClientModel randomClient(List<ClientModel> clientList) {
         ClientModel clientOrder = new ClientModel();
         if (!clientList.isEmpty()) {
-            int indice = MapFoodUtils.getRandomNumber(0, 10);
+            int indice = MapFoodUtils.getRandomNumber(0, 9);
             clientOrder = clientList.get(indice);
         }
         return clientOrder;

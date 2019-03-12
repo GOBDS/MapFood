@@ -1,33 +1,27 @@
 package br.com.aceleradevsp.squad2.mapfood.order;
 
 import br.com.aceleradevsp.squad2.mapfood.utils.MapFoodUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class OrderControllerTest {
-
-
-    private MockMvc mockMvc;
 
     @Autowired
     private ClientRepository clientRepository;
@@ -35,13 +29,11 @@ public class OrderControllerTest {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    @Autowired
-    private WebApplicationContext appContext;
+    @LocalServerPort
+    private int port;
 
-    @Before
-    public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(this.appContext).build();
-    }
+    @Autowired
+    private TestRestTemplate restTemplate;
 
     @Test
     public void receivingAnOrder() {
@@ -58,17 +50,14 @@ public class OrderControllerTest {
         order.setProducts(products);
         order.setDate(LocalDate.now().toString());
 
-        ObjectMapper om = new ObjectMapper();
         try {
-            String jsonOrder = om.writeValueAsString(order);
-            ResultActions orders = this.mockMvc.perform(MockMvcRequestBuilders.post("/orders").content(jsonOrder).contentType(MediaType.APPLICATION_JSON));
-            String response = orders.andReturn().getResponse().getContentAsString();
-            OrderModel orderDone = om.readValue(response, OrderModel.class);
+            ResponseEntity<OrderModel> responseEntity = restTemplate.postForEntity(URI.create("http://localhost:" + port + "/orders"), order, OrderModel.class);
 
-            Assert.assertNotNull(orderDone.getOrderId());
+            assertNotNull(responseEntity);
+            assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 }

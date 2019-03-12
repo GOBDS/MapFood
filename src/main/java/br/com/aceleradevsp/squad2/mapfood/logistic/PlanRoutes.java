@@ -98,7 +98,9 @@ public class PlanRoutes {
         Job job;
         while (percent != 100) {
             job = jobController.getJobById(getToken(), problem.getId());
-            percent = Integer.parseInt(job.getPercent());
+            if (job.getPercent() != null) {
+                percent = Integer.parseInt(job.getPercent());
+            }
             if (percent < 50) {
                 Thread.sleep(2000);
             } else if (percent != 100) {
@@ -142,7 +144,9 @@ public class PlanRoutes {
         Job job;
         while (percent != 100) {
             job = jobController.getJobById(getToken(), problem.getId());
-            percent = Integer.parseInt(job.getPercent());
+            if (job.getPercent() != null) {
+                percent = Integer.parseInt(job.getPercent());
+            }
             if (percent < 50) {
                 Thread.sleep(2000);
             } else if (percent != 100) {
