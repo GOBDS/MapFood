@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,6 +22,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 @SpringBootApplication
+@EnableScheduling
 public class Application implements CommandLineRunner {
 
     Logger logger = LoggerFactory.getLogger(Application.class);
