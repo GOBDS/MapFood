@@ -3,6 +3,7 @@ package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Authentication;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Points;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PostObject;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions.InvalidDataException;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions.TokenExpiredException;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,7 +58,7 @@ public class PostProblemControllerTest {
     public void postProblemWithInvalidData() {
         //Given
         String token = "ynsHq0dRDKam6FgGQfgVtiiFXmbc";
-        List<Point> points = new ArrayList<>();
+        List<Points> points = new ArrayList<>();
         PostObject object = new PostObject();
         object.setPoints(points);
 
@@ -90,7 +91,7 @@ public class PostProblemControllerTest {
     @Test(expected = InvalidDataException.class)
     public void getProblemByIdWithInvalidData() {
         //When
-        controller.getProblemById("","");
+        controller.getProblemById("", "");
 
         //Then
         fail("A exceção não ocorreu");
@@ -110,9 +111,9 @@ public class PostProblemControllerTest {
         PostObject response = controller.sendProblem(object, login.getAccessToken());
 
         //when
-        PostObject problem = controller.getProblemById(login.getAccessToken(),response.getId());
+        PostObject problem = controller.getProblemById(login.getAccessToken(), response.getId());
 
         //Then
-        assertThat(problem.getProfileName(),is(response.getProfileName()));
+        assertThat(problem.getProfileName(), is(response.getProfileName()));
     }
 }
