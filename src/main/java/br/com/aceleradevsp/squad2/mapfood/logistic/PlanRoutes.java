@@ -9,6 +9,8 @@ import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Points;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PostObject;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Solution;
 import br.com.aceleradevsp.squad2.mapfood.order.OrderModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.*;
 import org.springframework.stereotype.Component;
@@ -19,7 +21,7 @@ import java.util.Optional;
 
 @Component
 public class PlanRoutes {
-
+    Logger logger = LoggerFactory.getLogger(PlanRoutes.class);
 
     private PostProblemController problemController;
     private AuthenticationController authController;
@@ -66,7 +68,7 @@ public class PlanRoutes {
             try {
                 Thread.sleep(60000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
             times++;
         }
@@ -101,7 +103,7 @@ public class PlanRoutes {
                 deliver.setOrderModel(order);
                 startMonitoringRestaurant(problem, motoboyModel);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
     }
@@ -145,7 +147,7 @@ public class PlanRoutes {
             try {
                 startMonitoringDeliver(problem, motoboyModel);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
     }

@@ -15,7 +15,6 @@ public class OrderService {
     private LogisticService logisticService;
 
     public OrderService() {
-        // TODO Auto-generated constructor stub
     }
 
     @Autowired
@@ -63,11 +62,5 @@ public class OrderService {
         }
         return order;
     }
-
-
-   /* public LocalDateTime randomDate() {
-    	return MapFoodUtils.getRandonDate(LocalDateTime.now());
-    }*/
-
 
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LogisticController {
 
-    private LogisticService service;
+    LogisticService service;
 
     @Autowired
     public LogisticController(LogisticService service) {

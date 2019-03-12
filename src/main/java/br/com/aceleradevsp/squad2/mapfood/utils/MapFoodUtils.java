@@ -1,12 +1,7 @@
 package br.com.aceleradevsp.squad2.mapfood.utils;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -52,12 +47,10 @@ public class MapFoodUtils {
 
 	   public void populateOrders() {
 
-	        OrderModel.OrderModelBuilder builder = OrderModel.builder();
-	         
-	        List<RestaurantModel> restaurantList = new ArrayList<>();
+	        List<RestaurantModel> restaurantList;
 	        restaurantList = service.allRestaurants();
 	        
-	        List<ClientModel> clientList = new ArrayList<>();
+	        List<ClientModel> clientList;
 	        clientList = service.allClients();
 	        
 	        RestaurantModel restaurant = randomRestaurant(restaurantList);
@@ -67,7 +60,6 @@ public class MapFoodUtils {
 	        OrderModel order = new OrderModel();
 	        order.setRestaurant(restaurant);
 	        order.setClient(client);
-	        String a;
 	        service.save(order);
 	        
 	      

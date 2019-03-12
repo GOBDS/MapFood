@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.aceleradevsp.squad2.mapfood.utils.MapFoodUtils;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

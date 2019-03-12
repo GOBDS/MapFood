@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ManagerController {
 
-    private ManagerService service;
+    ManagerService service;
 
     @Autowired
     public ManagerController(ManagerService service) {
