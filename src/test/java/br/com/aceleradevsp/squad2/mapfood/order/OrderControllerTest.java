@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -29,9 +28,6 @@ public class OrderControllerTest {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    @LocalServerPort
-    private int port;
-
     @Autowired
     private TestRestTemplate restTemplate;
 
@@ -51,7 +47,7 @@ public class OrderControllerTest {
         order.setDate(LocalDate.now().toString());
 
         try {
-            ResponseEntity<OrderModel> responseEntity = restTemplate.postForEntity(URI.create("http://localhost:" + port + "/orders"), order, OrderModel.class);
+            ResponseEntity<OrderModel> responseEntity = restTemplate.postForEntity(URI.create("http://localhost:8080" + "/orders"), order, OrderModel.class);
 
             assertNotNull(responseEntity);
             assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
