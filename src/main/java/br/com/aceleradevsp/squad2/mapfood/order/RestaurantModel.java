@@ -1,7 +1,6 @@
 package br.com.aceleradevsp.squad2.mapfood.order;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -17,10 +16,9 @@ public class RestaurantModel {
 
     private String adressCity;
 
-    @GeoSpatialIndexed
     private double[] position;
 
-    private String dishdescription;
+    private String dishDescription;
 
     private List<ItemModel> menu;
 
@@ -32,7 +30,7 @@ public class RestaurantModel {
         this.restaurant = restaurant;
         this.adressCity = adressCity;
         this.position = position;
-        this.dishdescription = dishdescription;
+        this.dishDescription = dishDescription;
         this.menu = null == menu ? new ArrayList<>() : menu;
 
     }
@@ -69,16 +67,16 @@ public class RestaurantModel {
         this.position = position;
     }
 
-    public String getDishdescription() {
-        return dishdescription;
-    }
-
-    public void setDishdescription(String dishdescription) {
-        this.dishdescription = dishdescription;
-    }
-
-    public static RestaurantModelBuilder builder(){
+    public static RestaurantModelBuilder builder() {
         return new RestaurantModelBuilder();
+    }
+
+    public String getDishDescription() {
+        return dishDescription;
+    }
+
+    public void setDishDescription(String dishDescription) {
+        this.dishDescription = dishDescription;
     }
 
     public List<ItemModel> getMenu() {
@@ -126,7 +124,7 @@ public class RestaurantModel {
             return this;
         }
 
-        public RestaurantModelBuilder withMenu(List<ItemModel> menu){
+        public RestaurantModelBuilder withMenu(List<ItemModel> menu) {
             this.menu = menu;
             return this;
         }

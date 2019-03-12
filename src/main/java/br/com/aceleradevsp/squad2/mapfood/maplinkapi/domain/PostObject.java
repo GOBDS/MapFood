@@ -11,7 +11,7 @@ public class PostObject {
     public static final String FASTEST_WAY = "THE_FASTEST";
 
     private String id;
-    private List<Point> points;
+    private List<Points> points;
     private String profileName = "BRAZIL";
     private String calculationMode = FASTEST_WAY;
     private Integer startDate = 0;
@@ -20,7 +20,11 @@ public class PostObject {
     public PostObject() {
     }
 
-    public PostObject(List<Point> points, String profileName, String calculationMode, Integer startDate, Boolean useRealSpeeds) {
+    public PostObject(List<Points> points) {
+        this.points = points;
+    }
+
+    public PostObject(List<Points> points, String profileName, String calculationMode, Integer startDate, Boolean useRealSpeeds) {
         this.points = points;
         this.profileName = profileName;
         this.calculationMode = calculationMode;
@@ -37,11 +41,11 @@ public class PostObject {
         this.id = id;
     }
 
-    public List<Point> getPoints() {
+    public List<Points> getPoints() {
         return points;
     }
 
-    public void setPoints(List<Point> points) {
+    public void setPoints(List<Points> points) {
         this.points = points;
     }
 

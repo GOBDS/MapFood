@@ -1,8 +1,9 @@
 package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
 
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Authentication;
-import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Point;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.Points;
 import br.com.aceleradevsp.squad2.mapfood.maplinkapi.domain.PostObject;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions.TokenExpiredException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,19 +27,19 @@ public class PostProblemControllerTest {
     @Autowired
     private AuthenticationController authController;
 
-    private List<Point> points;
+    private List<Points> points;
 
     @Before
     public void setUp() {
-        Point restaurant = new Point(-22.440460, -46.982140, "Restaurant 1");
-        Point client = new Point(-22.431360, -46.955650, "Client X");
+        Points restaurant = new Points(-22.440460, -46.982140, "Restaurant 1");
+        Points client = new Points(-22.431360, -46.955650, "Client X");
 
         points = new ArrayList<>();
         points.add(restaurant);
         points.add(client);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = TokenExpiredException.class)
     public void postProblemWithExpiredTokenShouldReturn401() {
         //Given
         String tokenExpired = "ynsHq0dRDKam6FgGQfgVtiiFXmbc";

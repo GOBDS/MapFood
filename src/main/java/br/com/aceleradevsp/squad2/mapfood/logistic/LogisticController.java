@@ -9,7 +9,7 @@ public class LogisticController {
     private LogisticService service;
 
     @Autowired
-    public LogisticController(LogisticService service){
+    public LogisticController(LogisticService service) {
         this.service = service;
     }
 }

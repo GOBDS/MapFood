@@ -1,5 +1,7 @@
 package br.com.aceleradevsp.squad2.mapfood.maplinkapi;
 
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions.ObjectNotFoundException;
+import br.com.aceleradevsp.squad2.mapfood.maplinkapi.exceptions.TokenExpiredException;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
