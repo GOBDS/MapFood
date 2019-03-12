@@ -29,7 +29,7 @@ public class SolutionControllerTest {
 
         assertNotNull(login.getAccessToken());
 
-        String problemId = "5c7e9fdec079cd0006a1b8df";
+        String problemId = "5c87e2a543804e0006e88a76";
 
         //When
         Solution solution = controller.getSolutionById(login.getAccessToken(), problemId);
